@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurniCraft - Item Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">FurniCraft</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="rooms.html">Rooms</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="item-details">
+            <div class="details-container" id="detailsContainer">
+                <!-- Item details will be loaded from JSON -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 FurniCraft. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Load item details from JSON based on URL parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            
+            if (itemId) {
+                fetch('data/furniture.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const item = data.items.find(i => i.id == itemId);
+                        if (item) {
+                            const container = document.getElementById('detailsContainer');
+                            container.innerHTML = `
+                                <div class="item-images">
+                                    <div class="main-image">
+                                        <img src="${item.image}" alt="${item.name}">
+                                    </div>
+                                    <div class="thumbnail-images">
+                                        ${item.textures.map((texture, index) => `
+                                            <img src="${texture}" alt="Texture ${index + 1}" class="thumbnail">
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <h2>${item.name}</h2>
+                                    <div class="price">$${item.price}</div>
+                                    <div class="description">${item.description}</div>
+                                    
+                                    <div class="item-options">
+                                        <div class="form-group">
+                                            <label for="detailSize">Size</label>
+                                            <select id="detailSize">
+                                                ${item.sizes.map(size => `
+                                                    <option value="${size}">${size.charAt(0).toUpperCase() + size.slice(1)}</option>
+                                                `).join('')}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailColor">Color</label>
+                                            <select id="detailColor">
+                                                ${item.colors.map(color => `
+                                                    <option value="${color}">${color.charAt(0).toUpperCase() + color.slice(1)}</option>
+                                                `).join('')}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="action-buttons">
+                                        <button class="btn" id="viewIn3D">View in 3D</button>
+                                        <button class="btn primary" id="addToRoom">Add to Room</button>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Set up event listeners
+                            document.getElementById('viewIn3D').addEventListener('click', function() {
+                                window.location.href = `viewer.html?model=${item.model}&textures=${item.textures.join(',')}`;
+                            });
+                            
+                            document.getElementById('addToRoom').addEventListener('click', function() {
+                                const size = document.getElementById('detailSize').value;
+                                const color = document.getElementById('detailColor').value;
+                                // In a real app, this would add to the current room design
+                                alert(`Added ${item.name} (${size}, ${color}) to your room design`);
+                                window.location.href = 'editor-3d.html';
+                            });
+                            
+                            // Thumbnail click handler
+                            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                                thumb.addEventListener('click', function() {
+                                    document.querySelector('.main-image img').src = item.textures[index];
+                                });
+                            });
+                        } else {
+                            document.getElementById('detailsContainer').innerHTML = '<p>Item not found</p>';
+                        }
+                    });
+            } else {
+                document.getElementById('detailsContainer').innerHTML = '<p>No item specified</p>';
+            }
+        });
+    </script>
+</body>
+</html>

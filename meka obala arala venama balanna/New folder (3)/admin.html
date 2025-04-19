@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurniCraft - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #2b2d42;
+            --light-color: #f8f9fa;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --danger-color: #f72585;
+            --gray-color: #adb5bd;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            background-color: #f0f2f5;
+        }
+
+        nav a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        nav a i {
+            font-size: 1.1rem;
+        }
+
+        .admin-main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card h3 i {
+            color: var(--primary-color);
+        }
+
+        .card p {
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #d1145a;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d8;
+        }
+
+        .model-form, .rooms-preview {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        input[type="text"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .texture-files {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .texture-file-container {
+            border: 1px dashed var(--gray-color);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .texture-file-container:hover {
+            border-color: var(--primary-color);
+        }
+
+        .texture-file-container i {
+            font-size: 2rem;
+            color: var(--gray-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .texture-file-container p {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+
+        .room-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .room-selector select {
+            flex: 1;
+        }
+
+        .threejs-container {
+            width: 100%;
+            height: 500px;
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .models-list {
+            margin-top: 2rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #e3fafc;
+            color: #1098ad;
+        }
+
+        .status-inactive {
+            background-color: #fff3bf;
+            color: #f59f00;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.3rem;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background-color: #f1f3f5;
+        }
+
+        .edit-btn {
+            color: var(--accent-color);
+        }
+
+        .delete-btn {
+            color: var(--danger-color);
+        }
+
+        .preview-btn {
+            color: var(--success-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background-color: white;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1000;
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .notification.success {
+            background-color: var(--success-color);
+        }
+
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+
+        .notification.warning {
+            background-color: var(--warning-color);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .room-selector {
+                flex-direction: column;
+            }
+
+            .threejs-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-couch"></i>
+            <span>FurniCraft Admin</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="admin.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="admin-main">
+        <section class="admin-actions">
+            <h2><i class="fas fa-tasks"></i> Admin Dashboard</h2>
+            <div class="action-cards">
+                <div class="card" id="addModelCard">
+                    <h3><i class="fas fa-plus-circle"></i> Add New Model</h3>
+                    <p>Upload new 3D furniture models to the catalog</p>
+                    <button class="btn"><i class="fas fa-upload"></i> Add Model</button>
+                </div>
+                <div class="card" id="viewModelsCard">
+                    <h3><i class="fas fa-boxes"></i> Manage Models</h3>
+                    <p>View, edit or delete existing furniture models</p>
+                    <button class="btn"><i class="fas fa-list"></i> View Models</button>
+                </div>
+                <div class="card" id="viewRoomsCard">
+                    <h3><i class="fas fa-door-open"></i> View Rooms</h3>
+                    <p>Preview furniture arrangements in different room types</p>
+                    <button class="btn"><i class="fas fa-eye"></i> View Rooms</button>
+                </div>
+                <div class="card" id="analyticsCard">
+                    <h3><i class="fas fa-chart-line"></i> Analytics</h3>
+                    <p>View usage statistics and model popularity</p>
+                    <button class="btn"><i class="fas fa-chart-pie"></i> View Analytics</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="model-form hidden" id="modelForm">
+            <h2><i class="fas fa-cube"></i> Add New Furniture Model</h2>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="modelName">Model Name</label>
+                    <input type="text" id="modelName" placeholder="Enter model name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelDescription">Description</label>
+                    <textarea id="modelDescription" rows="3" placeholder="Enter model description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelCategory">Category</label>
+                    <select id="modelCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="sofa">Sofa</option>
+                        <option value="chair">Chair</option>
+                        <option value="table">Table</option>
+                        <option value="bed">Bed</option>
+                        <option value="outdoor">Outdoor Sofa</option>
+                        <option value="desk">Desk</option>
+                        <option value="cabinet">Cabinet</option>
+                        <option value="office-chair">Office Chair</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelPrice">Price (USD)</label>
+                    <input type="number" id="modelPrice" placeholder="Enter price" min="0" step="0.01">
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelDimensions">Dimensions (L x W x H in cm)</label>
+                    <div style="display: flex; gap: 1rem;">
+                        <input type="number" id="modelLength" placeholder="Length" min="0" style="flex: 1;">
+                        <input type="number" id="modelWidth" placeholder="Width" min="0" style="flex: 1;">
+                        <input type="number" id="modelHeight" placeholder="Height" min="0" style="flex: 1;">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelFile">GLTF Model File</label>
+                    <input type="file" id="modelFile" accept=".gltf,.glb" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Textures (3 required)</label>
+                    <div class="texture-files">
+                        <div class="texture-file-container">
+                            <i class="fas fa-image"></i>
+                            <p>Base Color</p>
+                            <input type="file" class="texture-file" accept=".jpg,.png,.jpeg" required>
+                        </div>
+                        <div class="texture-file-container">
+                            <i class="fas fa-image"></i>
+                            <p>Normal Map</p>
+                            <input type="file" class="texture-file" accept=".jpg,.png,.jpeg" required>
+                        </div>
+                        <div class="texture-file-container">
+                            <i class="fas fa-image"></i>
+                            <p>Roughness/Metalness</p>
+                            <input type="file" class="texture-file" accept=".jpg,.png,.jpeg" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelThumbnail">Thumbnail Image</label>
+                    <input type="file" id="modelThumbnail" accept=".jpg,.png,.jpeg" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modelStatus">Status</label>
+                    <select id="modelStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Model</button>
+                    <button type="button" class="btn btn-outline" id="cancelModelBtn"><i class="fas fa-times"></i> Cancel</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="models-list hidden" id="modelsList">
+            <h2><i class="fas fa-box-open"></i> Furniture Models</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Date Added</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modelsTableBody">
+                        <!-- Models will be loaded here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 1.5rem;">
+                <div>
+                    <button class="btn" id="addNewModelBtn"><i class="fas fa-plus"></i> Add New Model</button>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-outline"><i class="fas fa-download"></i> Export</button>
+                    <button class="btn btn-outline"><i class="fas fa-filter"></i> Filter</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="rooms-preview hidden" id="roomsPreview">
+            <h2><i class="fas fa-camera"></i> Rooms Preview</h2>
+            <div class="room-selector">
+                <select id="roomSelect">
+                    <option value="">Select a room type</option>
+                    <option value="kids">Kids Room</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="living">Living Room</option>
+                    <option value="bedroom">Bedroom</option>
+                    <option value="dining">Dining Room</option>
+                    <option value="office">Office</option>
+                    <option value="bathroom">Bathroom</option>
+                </select>
+                <button class="btn" id="loadRoomBtn"><i class="fas fa-sync-alt"></i> Load Room</button>
+            </div>
+            <div class="threejs-container" id="roomViewer">
+                <div class="loading-overlay hidden" id="roomLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading room...</p>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <h3>Available Furniture in This Room</h3>
+                <div class="action-cards" id="roomFurnitureList">
+                    <!-- Furniture items will be loaded here dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <section class="analytics hidden" id="analyticsSection">
+            <h2><i class="fas fa-chart-bar"></i> Analytics Dashboard</h2>
+            <div class="action-cards">
+                <div class="card">
+                    <h3><i class="fas fa-cubes"></i> Total Models</h3>
+                    <p id="totalModels">Loading...</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-eye"></i> Monthly Views</h3>
+                    <p id="monthlyViews">Loading...</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-star"></i> Most Popular</h3>
+                    <p id="mostPopular">Loading...</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> Active Users</h3>
+                    <p id="activeUsers">Loading...</p>
+                </div>
+            </div>
+            <div style="background-color: white; border-radius: var(--border-radius); box-shadow: var(--box-shadow); padding: 2rem; margin-top: 2rem;">
+                <h3>Model Usage Statistics</h3>
+                <div id="chartContainer" style="height: 400px; width: 100%;">
+                    <!-- Chart will be rendered here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 FurniCraft Admin. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // UI Elements
+            const addModelCard = document.getElementById('addModelCard');
+            const viewModelsCard = document.getElementById('viewModelsCard');
+            const viewRoomsCard = document.getElementById('viewRoomsCard');
+            const analyticsCard = document.getElementById('analyticsCard');
+            
+            const modelForm = document.getElementById('modelForm');
+            const modelsList = document.getElementById('modelsList');
+            const roomsPreview = document.getElementById('roomsPreview');
+            const analyticsSection = document.getElementById('analyticsSection');
+            
+            const cancelModelBtn = document.getElementById('cancelModelBtn');
+            const addNewModelBtn = document.getElementById('addNewModelBtn');
+            const loadRoomBtn = document.getElementById('loadRoomBtn');
+            
+            const uploadForm = document.getElementById('uploadForm');
+            const modelsTableBody = document.getElementById('modelsTableBody');
+            const roomSelect = document.getElementById('roomSelect');
+            const roomViewer = document.getElementById('roomViewer');
+            const roomLoading = document.getElementById('roomLoading');
+            
+            // Sample data for demonstration
+            const sampleModels = [
+                { id: 1, name: 'Modern Sofa', category: 'sofa', price: 899.99, status: 'active', date: '2023-05-15' },
+                { id: 2, name: 'Office Chair', category: 'office-chair', price: 249.99, status: 'active', date: '2023-06-02' },
+                { id: 3, name: 'Dining Table', category: 'table', price: 599.99, status: 'inactive', date: '2023-04-20' },
+                { id: 4, name: 'King Size Bed', category: 'bed', price: 1299.99, status: 'active', date: '2023-07-10' },
+                { id: 5, name: 'Bookshelf', category: 'cabinet', price: 349.99, status: 'active', date: '2023-03-28' },
+            ];
+            
+            // Initialize Three.js scene variables
+            let scene, camera, renderer, controls;
+            
+            // Event Listeners
+            addModelCard.addEventListener('click', function() {
+                hideAllSections();
+                modelForm.classList.remove('hidden');
+            });
+            
+            viewModelsCard.addEventListener('click', function() {
+                hideAllSections();
+                modelsList.classList.remove('hidden');
+                loadModelsTable();
+            });
+            
+            viewRoomsCard.addEventListener('click', function() {
+                hideAllSections();
+                roomsPreview.classList.remove('hidden');
+            });
+            
+            analyticsCard.addEventListener('click', function() {
+                hideAllSections();
+                analyticsSection.classList.remove('hidden');
+                loadAnalyticsData();
+            });
+            
+            cancelModelBtn.addEventListener('click', function() {
+                hideAllSections();
+            });
+            
+            addNewModelBtn.addEventListener('click', function() {
+                hideAllSections();
+                modelForm.classList.remove('hidden');
+            });
+            
+            loadRoomBtn.addEventListener('click', function() {
+                const selectedRoom = roomSelect.value;
+                if (selectedRoom) {
+                    loadRoomPreview(selectedRoom);
+                } else {
+                    showNotification('Please select a room type first', 'error');
+                }
+            });
+            
+            uploadForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real app, you would upload the files to a server here
+                showNotification('Model uploaded successfully!', 'success');
+                resetForm();
+                hideAllSections();
+            });
+            
+            // Helper Functions
+            function hideAllSections() {
+                modelForm.classList.add('hidden');
+                modelsList.classList.add('hidden');
+                roomsPreview.classList.add('hidden');
+                analyticsSection.classList.add('hidden');
+            }
+            
+            function resetForm() {
+                uploadForm.reset();
+            }
+            
+            function loadModelsTable() {
+                modelsTableBody.innerHTML = '';
+                
+                sampleModels.forEach(model => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${model.id}</td>
+                        <td>${model.name}</td>
+                        <td>${formatCategory(model.category)}</td>
+                        <td>$${model.price.toFixed(2)}</td>
+                        <td><span class="status-badge status-${model.status}">${model.status.charAt(0).toUpperCase() + model.status.slice(1)}</span></td>
+                        <td>${model.date}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="action-btn preview-btn" title="Preview" data-id="${model.id}"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn edit-btn" title="Edit" data-id="${model.id}"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete-btn" title="Delete" data-id="${model.id}"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                    
+                    modelsTableBody.appendChild(row);
+                });
+                
+                // Add event listeners to action buttons
+                document.querySelectorAll('.preview-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const modelId = this.getAttribute('data-id');
+                        previewModel(modelId);
+                    });
+                });
+                
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const modelId = this.getAttribute('data-id');
+                        editModel(modelId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const modelId = this.getAttribute('data-id');
+                        deleteModel(modelId);
+                    });
+                });
+            }
+            
+            function formatCategory(category) {
+                const words = category.split('-');
+                return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+            }
+            
+            function previewModel(modelId) {
+                // In a real app, this would show a 3D preview of the model
+                showNotification(`Previewing model #${modelId}`, 'success');
+            }
+            
+            function editModel(modelId) {
+                // In a real app, this would load the model data into the form for editing
+                hideAllSections();
+                modelForm.classList.remove('hidden');
+                document.getElementById('modelName').value = `Editing Model #${modelId}`;
+                showNotification(`Editing model #${modelId}`, 'success');
+            }
+            
+            function deleteModel(modelId) {
+                if (confirm(`Are you sure you want to delete model #${modelId}?`)) {
+                    // In a real app, this would send a request to delete the model from the server
+                    showNotification(`Model #${modelId} deleted`, 'success');
+                    loadModelsTable(); // Refresh the table
+                }
+            }
+            
+            function loadRoomPreview(roomType) {
+                roomLoading.classList.remove('hidden');
+                
+                // Simulate loading delay
+                setTimeout(() => {
+                    initThreeJS(roomType);
+                    loadRoomFurniture(roomType);
+                    roomLoading.classList.add('hidden');
+                }, 1500);
+            }
+            
+            function initThreeJS(roomType) {
+                // Clear previous scene if it exists
+                if (renderer) {
+                    roomViewer.removeChild(renderer.domElement);
+                }
+                
+                // Create scene
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0xf0f0f0);
+                
+                // Create camera
+                camera = new THREE.PerspectiveCamera(75, roomViewer.clientWidth / roomViewer.clientHeight, 0.1, 1000);
+                camera.position.set(5, 5, 5);
+                
+                // Create renderer
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(roomViewer.clientWidth, roomViewer.clientHeight);
+                roomViewer.appendChild(renderer.domElement);
+                
+                // Add controls
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.25;
+                
+                // Add lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 10, 7);
+                scene.add(directionalLight);
+                
+                // Add room (simple cube for demonstration)
+                const roomGeometry = new THREE.BoxGeometry(10, 5, 10);
+                const roomMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0xdddddd,
+                    side: THREE.BackSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const room = new THREE.Mesh(roomGeometry, roomMaterial);
+                scene.add(room);
+                
+                // Add floor
+                const floorGeometry = new THREE.PlaneGeometry(10, 10);
+                const floorMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0xaaaaaa,
+                    roughness: 0.8
+                });
+                const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+                floor.rotation.x = -Math.PI / 2;
+                floor.position.y = -2.5;
+                scene.add(floor);
+                
+                // Animation loop
+                function animate() {
+                    requestAnimationFrame(animate);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                
+                // Handle window resize
+                window.addEventListener('resize', function() {
+                    camera.aspect = roomViewer.clientWidth / roomViewer.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(roomViewer.clientWidth, roomViewer.clientHeight);
+                });
+            }
+            
+            function loadRoomFurniture(roomType) {
+                const roomFurnitureList = document.getElementById('roomFurnitureList');
+                roomFurnitureList.innerHTML = '';
+                
+                // Filter models that would typically be in this room type
+                let furnitureForRoom = [];
+                
+                switch(roomType) {
+                    case 'living':
+                        furnitureForRoom = sampleModels.filter(m => ['sofa', 'chair', 'table', 'cabinet'].includes(m.category));
+                        break;
+                    case 'bedroom':
+                        furnitureForRoom = sampleModels.filter(m => ['bed', 'cabinet'].includes(m.category));
+                        break;
+                    case 'office':
+                        furnitureForRoom = sampleModels.filter(m => ['desk', 'office-chair'].includes(m.category));
+                        break;
+                    default:
+                        furnitureForRoom = sampleModels.slice(0, 4);
+                }
+                
+                furnitureForRoom.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <h3>${item.name}</h3>
+                        <p>Category: ${formatCategory(item.category)}</p>
+                        <p>Price: $${item.price.toFixed(2)}</p>
+                        <button class="btn btn-outline" style="margin-top: 0.5rem;" data-id="${item.id}">
+                            <i class="fas fa-search"></i> Preview
+                        </button>
+                    `;
+                    roomFurnitureList.appendChild(card);
+                });
+                
+                // Add click event to preview buttons
+                document.querySelectorAll('#roomFurnitureList .btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const modelId = this.getAttribute('data-id');
+                        previewModelInRoom(modelId);
+                    });
+                });
+            }
+            
+            function previewModelInRoom(modelId) {
+                // In a real app, this would add the selected model to the room preview
+                showNotification(`Added model #${modelId} to room preview`, 'success');
+            }
+            
+            function loadAnalyticsData() {
+                // Simulate loading data
+                setTimeout(() => {
+                    document.getElementById('totalModels').textContent = sampleModels.length;
+                    document.getElementById('monthlyViews').textContent = '1,245 views';
+                    document.getElementById('mostPopular').textContent = 'Modern Sofa (328 views)';
+                    document.getElementById('activeUsers').textContent = '142 active users';
+                    
+                    renderChart();
+                }, 500);
+            }
+            
+            function renderChart() {
+                const ctx = document.createElement('canvas');
+                document.getElementById('chartContainer').innerHTML = '';
+                document.getElementById('chartContainer').appendChild(ctx);
+                
+                const categories = [...new Set(sampleModels.map(m => m.category))];
+                const categoryCounts = categories.map(cat => 
+                    sampleModels.filter(m => m.category === cat).length
+                );
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: categories.map(formatCategory),
+                        datasets: [{
+                            label: 'Models by Category',
+                            data: categoryCounts,
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(255, 159, 64, 0.7)',
+                                'rgba(153, 102, 255, 0.7)',
+                                'rgba(255, 205, 86, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 205, 86, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            function showNotification(message, type) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove notification after animation
+                setTimeout(() => {
+                    notification.remove();
+                }, 3500);
+            }
+            
+            // Initialize the page
+            loadModelsTable();
+        });
+    </script>
+</body>
+</html>

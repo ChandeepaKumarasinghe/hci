@@ -1,0 +1,8 @@
+Model Information:
+* title:	Chair
+* source:	https://sketchfab.com/3d-models/chair-2d97e722f4724086ae1fbec14a5bb048
+* author:	shuvalov.di (https://sketchfab.com/shuvalov.di)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
