@@ -1,112 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="stylesheet" href="assets/css/style.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Furniture Shop - Sustainable Home Furnishings</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <title>Furniture Shop - Home</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header>
-        <div class="logo">Green Furniture Shop</div>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="pantry.html">Pantry</a></li>
-                <li><a href="living.html">Living</a></li>
-                <li><a href="dining.html">Dining</a></li>
-                <li><a href="bedroom.html">Bedroom</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="logo">
+            <img src="assets/images/logo.png" alt="Furniture Shop Logo">
+        </div>
+        <h1>3D Furniture Shop</h1>
     </header>
-
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Sustainable Furniture for Modern Living</h1>
-                <p>Eco-friendly designs that don't compromise on style or comfort</p>
-                <a href="#featured" class="btn">Explore Collections</a>
+    <main class="home-container">
+        <div class="login-options">
+            <a href="login.html?role=admin" class="btn admin-btn">Admin Login</a>
+            <a href="login.html?role=user" class="btn user-btn">User Login</a>
+        </div>
+        <div class="preview-section">
+            <h2>Featured Furniture</h2>
+            <div id="featured-models" class="model-previews">
+                <!-- Dynamically loaded from items.json -->
             </div>
-            <div id="hero-model" class="model-viewer"></div>
-        </section>
-
-        <section id="featured" class="featured">
-            <h2>Featured Collections</h2>
-            <div class="collections-grid">
-                <div class="collection-card">
-                    <a href="pantry.html">
-                        <img src="assets/images/pantry-thumb.jpg" alt="Pantry Collection">
-                        <h3>Pantry</h3>
-                    </a>
-                </div>
-                <div class="collection-card">
-                    <a href="living.html">
-                        <img src="assets/images/living-thumb.jpg" alt="Living Room Collection">
-                        <h3>Living Room</h3>
-                    </a>
-                </div>
-                <div class="collection-card">
-                    <a href="dining.html">
-                        <img src="assets/images/dining-thumb.jpg" alt="Dining Collection">
-                        <h3>Dining Room</h3>
-                    </a>
-                </div>
-                <div class="collection-card">
-                    <a href="bedroom.html">
-                        <img src="assets/images/bedroom-thumb.jpg" alt="Bedroom Collection">
-                        <h3>Bedroom</h3>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section class="about-preview">
-            <div class="about-content">
-                <h2>Crafted with Care for the Planet</h2>
-                <p>Our furniture is made from sustainably sourced materials with minimal environmental impact.</p>
-                <a href="about.html" class="btn-outline">Our Story</a>
-            </div>
-        </section>
+        </div>
     </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Green Furniture Shop</h3>
-                <p>Sustainable furniture for a better tomorrow.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <p>info@greenfurnitureshop.com</p>
-                <p>+1 (555) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 Green Furniture Shop. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="js/models.js"></script>
-    <script src="js/three-app.js"></script>
-    <script src="js/main.js"></script>
-    <script>
-        // Load hero model
-        window.addEventListener('load', () => {
-            loadModel('hero-model', 'assets/models/hero-furniture.glb');
-        });
-    </script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
