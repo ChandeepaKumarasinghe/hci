@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +13,13 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
         }
-        
+
         header {
             background-color: #2c3e50;
             color: white;
@@ -26,88 +27,88 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
         }
-        
+
         nav ul {
             display: flex;
             list-style: none;
         }
-        
+
         nav ul li {
             margin-left: 1.5rem;
         }
-        
+
         nav ul li a {
             color: white;
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         nav ul li a:hover {
             color: #3498db;
         }
-        
+
         /* Editor Main */
         .editor-main {
             padding: 2rem;
         }
-        
+
         .editor-container {
             display: flex;
             gap: 2rem;
             height: calc(100vh - 150px);
         }
-        
+
         .threejs-container {
             flex: 1;
             background-color: #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-        
+
         .loading-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 100;
         }
-        
+
         .editor-controls {
             width: 350px;
             background-color: white;
             border-radius: 8px;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
         }
-        
+
         /* Control Sections */
         .control-section {
             margin-bottom: 2rem;
         }
-        
+
         .control-section h3 {
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid #eee;
             color: #2c3e50;
         }
-        
+
         /* Category Tabs */
         .category-tabs {
             display: flex;
@@ -115,7 +116,7 @@
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
-        
+
         .tab-btn {
             padding: 0.5rem 1rem;
             background-color: #eee;
@@ -124,23 +125,23 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .tab-btn.active {
             background-color: #3498db;
             color: white;
         }
-        
+
         .tab-btn:hover:not(.active) {
             background-color: #ddd;
         }
-        
+
         /* Furniture Items */
         .furniture-items {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
-        
+
         .furniture-item {
             background-color: #f9f9f9;
             border-radius: 4px;
@@ -150,38 +151,38 @@
             transition: all 0.3s;
             border: 1px solid #ddd;
         }
-        
+
         .furniture-item:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .furniture-item img {
             width: 100%;
             height: 80px;
             object-fit: contain;
             margin-bottom: 0.5rem;
         }
-        
+
         /* Form Controls */
         .form-group {
             margin-bottom: 1rem;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
-        
-        .form-group select, 
+
+        .form-group select,
         .form-group input[type="range"] {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        
+
         .btn {
             background-color: #3498db;
             color: white;
@@ -193,26 +194,26 @@
             width: 100%;
             margin-top: 0.5rem;
         }
-        
+
         .btn:hover {
             background-color: #2980b9;
         }
-        
+
         #removeItem {
             background-color: #e74c3c;
         }
-        
+
         #removeItem:hover {
             background-color: #c0392b;
         }
-        
+
         footer {
             text-align: center;
             padding: 1rem;
             background-color: #2c3e50;
             color: white;
         }
-        
+
         .texture-preview {
             width: 50px;
             height: 50px;
@@ -223,6 +224,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">FurniCraft 3D Editor</div>
@@ -242,7 +244,7 @@
                     <div>Loading room...</div>
                 </div>
             </div>
-            
+
             <div class="editor-controls">
                 <div class="control-section">
                     <h3>Room Selection</h3>
@@ -258,7 +260,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="control-section">
                     <h3>Room Textures</h3>
                     <div class="item-properties">
@@ -287,7 +289,7 @@
                         <button class="btn" id="applyTextures">Apply Textures</button>
                     </div>
                 </div>
-                
+
                 <div class="control-section">
                     <h3>Furniture Categories</h3>
                     <div class="category-tabs">
@@ -296,12 +298,12 @@
                         <button class="tab-btn" data-category="chair">Chair</button>
                         <button class="tab-btn" data-category="table">Table</button>
                     </div>
-                    
+
                     <div class="furniture-items" id="furnitureItems">
                         <!-- Dynamically loaded from JS -->
                     </div>
                 </div>
-                
+
                 <div class="control-section">
                     <h3>Selected Item</h3>
                     <div class="item-properties">
@@ -344,7 +346,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/DragControls.js"></script>
-    
+
     <script>
         // Global variables
         let scene, camera, renderer, controls, dragControls;
@@ -353,44 +355,44 @@
         let furnitureItems = [];
         let textureLoader = new THREE.TextureLoader();
         let currentRoom = null;
-        
+
         // Sample furniture data
         const furnitureData = [
-            { 
-                id: 1, 
-                name: "Modern Sofa", 
-                category: "sofa", 
-                gltfPath: "assets/models/chair/scene.gltf", 
-                thumbnail: "rooms/living_room/lr.jpg" 
+            {
+                id: 1,
+                name: "Modern Sofa",
+                category: "sofa",
+                gltfPath: "assets/models/chair/scene.gltf",
+                thumbnail: "rooms/living_room/lr.jpg"
             },
-            { 
-                id: 2, 
-                name: "Dining Chair", 
-                category: "chair", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
-                thumbnail: "models/furniture/thumbnails/chair.jpg" 
+            {
+                id: 2,
+                name: "Dining Chair",
+                category: "chair",
+                gltfPath: "rooms/living_room/miniroom.gltf",
+                thumbnail: "models/furniture/thumbnails/chair.jpg"
             },
-            { 
-                id: 3, 
-                name: "Coffee Table", 
-                category: "table", 
-                gltfPath: "models/furniture/table.gltf", 
-                thumbnail: "models/furniture/thumbnails/table.jpg" 
+            {
+                id: 3,
+                name: "Coffee Table",
+                category: "table",
+                gltfPath: "models/furniture/table.gltf",
+                thumbnail: "models/furniture/thumbnails/table.jpg"
             },
-            { 
-                id: 4, 
-                name: "Armchair", 
-                category: "chair", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
-                thumbnail: "models/furniture/thumbnails/armchair.jpg" 
+            {
+                id: 4,
+                name: "Armchair",
+                category: "chair",
+                gltfPath: "rooms/living_room/miniroom.gltf",
+                thumbnail: "models/furniture/thumbnails/armchair.jpg"
             }
         ];
-        
+
         // Room data with texture information
         const roomData = {
-            living: { 
-                name: "Living Room", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
+            living: {
+                name: "Living Room",
+                gltfPath: "rooms/living_room/miniroom.gltf",
                 thumbnail: "models/rooms/thumbnails/living.jpg",
                 textures: {
                     wall: {
@@ -409,9 +411,9 @@
                     }
                 }
             },
-            bedroom: { 
-                name: "Bedroom", 
-                gltfPath: "models/rooms/bedroom.gltf", 
+            bedroom: {
+                name: "Bedroom",
+                gltfPath: "models/rooms/bedroom.gltf",
                 thumbnail: "models/rooms/thumbnails/bedroom.jpg",
                 textures: {
                     wall: {
@@ -430,9 +432,9 @@
                     }
                 }
             },
-            kitchen: { 
-                name: "Kitchen", 
-                gltfPath: "models/rooms/kitchen.gltf", 
+            kitchen: {
+                name: "Kitchen",
+                gltfPath: "models/rooms/kitchen.gltf",
                 thumbnail: "models/rooms/thumbnails/kitchen.jpg",
                 textures: {
                     wall: {
@@ -451,9 +453,9 @@
                     }
                 }
             },
-            office: { 
-                name: "Office", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
+            office: {
+                name: "Office",
+                gltfPath: "rooms/living_room/miniroom.gltf",
                 thumbnail: "models/rooms/thumbnails/office.jpg",
                 textures: {
                     wall: {
@@ -472,9 +474,9 @@
                     }
                 }
             },
-            dining: { 
-                name: "Dining Room", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
+            dining: {
+                name: "Dining Room",
+                gltfPath: "rooms/living_room/miniroom.gltf",
                 thumbnail: "models/rooms/thumbnails/dining.jpg",
                 textures: {
                     wall: {
@@ -493,9 +495,9 @@
                     }
                 }
             },
-            patio: { 
-                name: "Outdoor Patio", 
-                gltfPath: "rooms/living_room/miniroom.gltf", 
+            patio: {
+                name: "Outdoor Patio",
+                gltfPath: "rooms/living_room/miniroom.gltf",
                 thumbnail: "models/rooms/thumbnails/patio.jpg",
                 textures: {
                     wall: {
@@ -521,100 +523,100 @@
             // Create scene
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xf0f0f0);
-            
+
             // Create camera
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.set(5, 5, 5);
-            
+
             // Create renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(document.getElementById('modelViewer').clientWidth, document.getElementById('modelViewer').clientHeight);
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             document.getElementById('modelViewer').appendChild(renderer.domElement);
-            
+
             // Add orbit controls
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            
+
             // Add lights
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
-            
+
             const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
             directionalLight.position.set(5, 10, 7);
             directionalLight.castShadow = true;
             directionalLight.shadow.mapSize.width = 1024;
             directionalLight.shadow.mapSize.height = 1024;
             scene.add(directionalLight);
-            
+
             // Add grid helper
             const gridHelper = new THREE.GridHelper(20, 20);
             scene.add(gridHelper);
-            
+
             // Load default room
             loadRoom('living');
-            
+
             // Handle window resize
             window.addEventListener('resize', onWindowResize);
-            
+
             // Start animation loop
             animate();
         }
-        
+
         // Load room model
         function loadRoom(roomId) {
             const loadingOverlay = document.getElementById('loadingOverlay');
             loadingOverlay.style.display = 'flex';
-            
+
             const room = roomData[roomId];
             if (!room) {
                 console.error('Room not found:', roomId);
                 loadingOverlay.style.display = 'none';
                 return;
             }
-            
+
             currentRoom = room;
-            
+
             // Remove existing room if present
             if (roomModel) {
                 scene.remove(roomModel);
                 roomModel = null;
             }
-            
+
             // Remove all furniture
             furnitureItems.forEach(item => scene.remove(item));
             furnitureItems = [];
             selectedObject = null;
-            
+
             const loader = new THREE.GLTFLoader();
-            
+
             console.log('Loading room:', room.gltfPath);
-            
+
             loader.load(
                 room.gltfPath,
                 function (gltf) {
                     console.log('Room loaded successfully:', room.name);
                     roomModel = gltf.scene;
                     scene.add(roomModel);
-                    
+
                     // Enable shadows for all meshes in the room
-                    roomModel.traverse(function(child) {
+                    roomModel.traverse(function (child) {
                         if (child.isMesh) {
                             child.castShadow = true;
                             child.receiveShadow = true;
                         }
                     });
-                    
+
                     // Center the room
                     centerObject(roomModel);
-                    
+
                     // Initialize drag controls for furniture
                     initDragControls();
-                    
+
                     loadingOverlay.style.display = 'none';
-                    
+
                     // Update room select dropdown
                     document.getElementById('roomSelect').value = roomId;
                 },
@@ -625,60 +627,60 @@
                 function (error) {
                     console.error('Error loading room:', error);
                     loadingOverlay.style.display = 'none';
-                    
+
                     // Create a placeholder cube if loading fails
                     const geometry = new THREE.BoxGeometry(5, 5, 5);
-                    const material = new THREE.MeshBasicMaterial({ 
+                    const material = new THREE.MeshBasicMaterial({
                         color: 0xff0000,
-                        wireframe: true 
+                        wireframe: true
                     });
                     roomModel = new THREE.Mesh(geometry, material);
                     scene.add(roomModel);
-                    
+
                     alert('Failed to load room model. Showing placeholder.');
                 }
             );
         }
-        
+
         // Center an object in the scene
         function centerObject(object) {
             const box = new THREE.Box3().setFromObject(object);
             const center = box.getCenter(new THREE.Vector3());
             const size = box.getSize(new THREE.Vector3());
-            
+
             // Center the object
             object.position.x -= center.x;
             object.position.y -= center.y;
             object.position.z -= center.z;
-            
+
             // Scale to reasonable size if needed
             const maxDim = Math.max(size.x, size.y, size.z);
             const scale = 5 / maxDim;
             object.scale.set(scale, scale, scale);
         }
-        
+
         // Initialize drag controls for furniture
         function initDragControls() {
             if (dragControls) {
                 dragControls.deactivate();
                 dragControls.dispose();
             }
-            
+
             dragControls = new THREE.DragControls(
                 furnitureItems,
                 camera,
                 renderer.domElement
             );
-            
+
             dragControls.addEventListener('dragstart', function (event) {
                 controls.enabled = false;
                 selectObject(event.object);
             });
-            
+
             dragControls.addEventListener('dragend', function () {
                 controls.enabled = true;
             });
-            
+
             dragControls.addEventListener('drag', function (event) {
                 // Snap to grid while dragging
                 event.object.position.y = 0; // Keep on ground
@@ -686,26 +688,26 @@
                 event.object.position.z = Math.round(event.object.position.z * 2) / 2;
             });
         }
-        
+
         // Load furniture item
         function loadFurnitureItem(itemPath, position = new THREE.Vector3(0, 0, 0)) {
             const loader = new THREE.GLTFLoader();
-            
+
             loader.load(
                 itemPath,
                 function (gltf) {
                     const model = gltf.scene;
-                    
+
                     // Position the furniture
                     position.y = 0; // Ensure it's on the ground
                     model.position.copy(position);
-                    
+
                     // Set furniture properties
                     model.userData = {
                         isFurniture: true,
                         originalMaterials: {}
                     };
-                    
+
                     // Store original materials for color changes
                     model.traverse(function (child) {
                         if (child.isMesh) {
@@ -714,11 +716,11 @@
                             child.receiveShadow = true;
                         }
                     });
-                    
+
                     scene.add(model);
                     furnitureItems.push(model);
                     selectObject(model);
-                    
+
                     // Update drag controls with new furniture
                     initDragControls();
                 },
@@ -729,21 +731,21 @@
                 }
             );
         }
-        
+
         // Change texture for walls or floors
         function changeTexture(textureType, textureName) {
             if (!roomModel || !currentRoom || !currentRoom.textures[textureType]) return;
-            
+
             const texturePath = currentRoom.textures[textureType][textureName];
-            
+
             if (texturePath) {
                 textureLoader.load(
                     texturePath,
-                    function(texture) {
+                    function (texture) {
                         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                         texture.repeat.set(2, 2);
-                        
-                        roomModel.traverse(function(child) {
+
+                        roomModel.traverse(function (child) {
                             if (child.isMesh) {
                                 // Simple way - just change all materials
                                 // For production, you'd want to identify specific walls/floors
@@ -756,18 +758,18 @@
                                 }
                             }
                         });
-                        
+
                         // Update texture preview
                         updateTexturePreview(textureType, texture);
                     },
                     undefined,
-                    function(error) {
+                    function (error) {
                         console.error('Error loading texture:', error);
                     }
                 );
             } else {
                 // Reset to default texture
-                roomModel.traverse(function(child) {
+                roomModel.traverse(function (child) {
                     if (child.isMesh) {
                         if (textureType === 'wall' && child.name.includes('wall')) {
                             child.material.map = null;
@@ -778,12 +780,12 @@
                         }
                     }
                 });
-                
+
                 // Clear texture preview
                 document.getElementById(`${textureType}Preview`).style.backgroundImage = 'none';
             }
         }
-        
+
         // Update texture preview thumbnail
         function updateTexturePreview(textureType, texture) {
             const previewElement = document.getElementById(`${textureType}Preview`);
@@ -791,7 +793,7 @@
             previewElement.style.backgroundImage = `url(${imageUrl})`;
             previewElement.style.backgroundSize = 'cover';
         }
-        
+
         // Select object
         function selectObject(object) {
             if (selectedObject) {
@@ -802,9 +804,9 @@
                     }
                 });
             }
-            
+
             selectedObject = object;
-            
+
             if (selectedObject) {
                 // Highlight selected object
                 selectedObject.traverse(function (child) {
@@ -813,26 +815,26 @@
                         child.material.emissive.setHex(0x888888);
                     }
                 });
-                
+
                 // Update UI controls
                 updateControls();
             }
         }
-        
+
         // Update UI controls based on selected object
         function updateControls() {
             if (!selectedObject) return;
-            
+
             // Update rotation slider
             const rotationDegrees = THREE.MathUtils.radToDeg(selectedObject.rotation.y);
             document.getElementById('itemRotation').value = rotationDegrees;
             document.getElementById('rotationValue').textContent = `${Math.round(rotationDegrees)}°`;
-            
+
             // Update size dropdown
             const size = selectedObject.scale.x;
             document.getElementById('itemSize').value = size.toFixed(2);
         }
-        
+
         // Handle window resize
         function onWindowResize() {
             const container = document.getElementById('modelViewer');
@@ -840,18 +842,18 @@
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
         }
-        
+
         // Animation loop
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
             renderer.render(scene, camera);
         }
-        
+
         // Initialize furniture items in UI
         function initFurnitureUI() {
             const container = document.getElementById('furnitureItems');
-            
+
             furnitureData.forEach(item => {
                 const itemElement = document.createElement('div');
                 itemElement.className = 'furniture-item';
@@ -861,35 +863,35 @@
                     <img src="${item.thumbnail}" alt="${item.name}" onerror="this.src='data:image/svg+xml;charset=UTF-8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><rect fill=\"%23ddd\" width=\"100\" height=\"100\"/><text fill=\"%23666\" font-family=\"sans-serif\" font-size=\"12\" dy=\"4\" text-anchor=\"middle\" x=\"50\" y=\"50\">No Preview</text></svg>'">
                     <div>${item.name}</div>
                 `;
-                
+
                 itemElement.addEventListener('click', () => {
                     // Position new furniture in front of camera
                     const position = new THREE.Vector3();
                     camera.getWorldDirection(position);
                     position.multiplyScalar(3);
                     position.y = 0;
-                    
+
                     loadFurnitureItem(item.gltfPath, position);
                 });
-                
+
                 container.appendChild(itemElement);
             });
         }
-        
+
         // Initialize category tabs
         function initCategoryTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
-            
+
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     // Update active tab
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    
+
                     // Filter furniture items
                     const category = tab.dataset.category;
                     const items = document.querySelectorAll('.furniture-item');
-                    
+
                     items.forEach(item => {
                         if (category === 'all' || item.dataset.category === category) {
                             item.style.display = 'block';
@@ -900,55 +902,55 @@
                 });
             });
         }
-        
+
         // Initialize texture previews
         function initTexturePreviews() {
             // Wall textures
             const wallSelect = document.getElementById('wallTexture');
             wallSelect.innerHTML = '';
-            
+
             Object.keys(roomData.living.textures.wall).forEach(textureKey => {
                 const option = document.createElement('option');
                 option.value = textureKey;
-                option.textContent = textureKey === 'default' ? 'Default' : 
-                                     textureKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                option.textContent = textureKey === 'default' ? 'Default' :
+                    textureKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
                 wallSelect.appendChild(option);
             });
-            
+
             // Floor textures
             const floorSelect = document.getElementById('floorTexture');
             floorSelect.innerHTML = '';
-            
+
             Object.keys(roomData.living.textures.floor).forEach(textureKey => {
                 const option = document.createElement('option');
                 option.value = textureKey;
-                option.textContent = textureKey === 'default' ? 'Default' : 
-                                     textureKey.replace(/\b\w/g, l => l.toUpperCase());
+                option.textContent = textureKey === 'default' ? 'Default' :
+                    textureKey.replace(/\b\w/g, l => l.toUpperCase());
                 floorSelect.appendChild(option);
             });
         }
-        
+
         // Initialize event listeners
         function initEventListeners() {
             // Room selection
             document.getElementById('roomSelect').addEventListener('change', (e) => {
                 loadRoom(e.target.value);
             });
-            
+
             // Apply textures button
             document.getElementById('applyTextures').addEventListener('click', () => {
                 const wallTexture = document.getElementById('wallTexture').value;
                 const floorTexture = document.getElementById('floorTexture').value;
-                
+
                 if (wallTexture !== 'default') {
                     changeTexture('wall', wallTexture);
                 }
-                
+
                 if (floorTexture !== 'default') {
                     changeTexture('floor', floorTexture);
                 }
             });
-            
+
             // Remove item button
             document.getElementById('removeItem').addEventListener('click', () => {
                 if (selectedObject && selectedObject.userData.isFurniture) {
@@ -958,7 +960,7 @@
                     initDragControls();
                 }
             });
-            
+
             // Size control
             document.getElementById('itemSize').addEventListener('change', (e) => {
                 if (selectedObject) {
@@ -966,7 +968,7 @@
                     selectedObject.scale.set(scale, scale, scale);
                 }
             });
-            
+
             // Color control
             document.getElementById('itemColor').addEventListener('change', (e) => {
                 if (selectedObject) {
@@ -980,7 +982,7 @@
                     });
                 }
             });
-            
+
             // Rotation control
             document.getElementById('itemRotation').addEventListener('input', (e) => {
                 if (selectedObject) {
@@ -989,7 +991,7 @@
                     document.getElementById('rotationValue').textContent = `${e.target.value}°`;
                 }
             });
-            
+
             // Save design
             document.getElementById('saveDesign').addEventListener('click', () => {
                 // In a real app, you would save the scene state to a database
@@ -1007,32 +1009,32 @@
                         floor: document.getElementById('floorTexture').value
                     }
                 };
-                
+
                 console.log('Design to save:', design);
                 alert('Design saved to console. Implement your save functionality here.');
             });
-            
+
             // Click on scene to select objects
             renderer.domElement.addEventListener('click', (event) => {
                 if (event.target !== renderer.domElement) return;
-                
+
                 const mouse = new THREE.Vector2();
                 mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
                 mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
-                
+
                 const raycaster = new THREE.Raycaster();
                 raycaster.setFromCamera(mouse, camera);
-                
+
                 const intersects = raycaster.intersectObjects(furnitureItems, true);
-                
+
                 if (intersects.length > 0) {
                     let selected = intersects[0].object;
-                    
+
                     // Find the parent furniture object
                     while (selected.parent && !selected.userData.isFurniture) {
                         selected = selected.parent;
                     }
-                    
+
                     if (selected.userData.isFurniture) {
                         selectObject(selected);
                     }
@@ -1041,7 +1043,7 @@
                 }
             });
         }
-        
+
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             initThreeJS();
@@ -1052,4 +1054,5 @@
         });
     </script>
 </body>
+
 </html>
