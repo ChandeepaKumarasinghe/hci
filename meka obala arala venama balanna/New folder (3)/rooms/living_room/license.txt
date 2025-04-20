@@ -1,8 +1,0 @@
-Model Information:
-* title:	Mini room
-* source:	https://sketchfab.com/3d-models/mini-room-685293ec9d1e48ab97503baba7bb8a3a
-* author:	Asadbek.Abduraxmonov (https://sketchfab.com/Asadbek.Abduraxmonov)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
