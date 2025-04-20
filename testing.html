@@ -67,6 +67,9 @@
             <option value="">Select an object</option>
             <option value="/public/table.glb">Table</option>
             <option value="/public/chair.glb">Chair</option>
+            <option value="public/cupboard_wardrobe_polished_lamination.glb">Cupboard</option>
+            <option value="/public/dining_scene.glb">Dining Table</option>
+
         </select>
         <button id="addObjectBtn">Add</button>
     </div>
@@ -74,7 +77,7 @@
     <!-- Viewer and Description Side by Side -->
     <div class="viewer-container">
         <!-- 3D Model Viewer -->
-        <model-viewer id="threedd" src="/public/modern_kitchen.glb" autoplay camera-controls auto-rotate
+        <model-viewer id="threedd" src="/public/modern_kitchen.glb"  camera-controls 
             shadow-intensity="1" exposure="1" environment-image="neutral" interaction-prompt="none" scale="1 1 1">
             <div id="partList" class="part-list" slot="hotspot-1"></div>
         </model-viewer>
