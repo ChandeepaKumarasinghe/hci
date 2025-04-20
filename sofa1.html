@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sofa Model 49</title>
   <style>
     * {
@@ -49,7 +50,7 @@
       border: 1px solid #ddd;
       border-radius: 15px;
       background-color: #8e7a7a;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
     }
 
     .description-card {
@@ -57,7 +58,7 @@
       border-radius: 15px;
       padding: 25px;
       width: 380px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
     }
 
@@ -124,6 +125,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Controls -->
@@ -138,17 +140,8 @@
   <!-- Viewer and Description -->
   <div class="viewer-container">
     <!-- 3D Model -->
-    <model-viewer id="threedd"
-      src="sofa_with_puma_mech.glb"
-      autoplay
-      camera-controls
-      disable-zoom
-      auto-rotate
-      shadow-intensity="1"
-      exposure="1"
-      environment-image="neutral"
-      interaction-prompt="none"
-      scale="1 1 1">
+    <model-viewer id="threedd" src="/public/sofa_with_puma_mech.glb" autoplay camera-controls disable-zoom auto-rotate
+      shadow-intensity="1" exposure="1" environment-image="neutral" interaction-prompt="none" scale="1 1 1">
     </model-viewer>
 
     <!-- Description -->
@@ -159,7 +152,8 @@
       <p><strong>Color:</strong> Customizable</p>
       <p><strong>Dimensions:</strong> Adjustable (via slider)</p>
       <p><strong>Price:</strong> $699.00</p>
-      <p><strong>Description:</strong> A luxurious leather L-shaped corner sofa designed for modern living spaces. Stylish, durable, and comfortable with adjustable features.</p>
+      <p><strong>Description:</strong> A luxurious leather L-shaped corner sofa designed for modern living spaces.
+        Stylish, durable, and comfortable with adjustable features.</p>
     </div>
   </div>
 
@@ -200,4 +194,5 @@
   </script>
 
 </body>
+
 </html>
