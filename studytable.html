@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Table Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .controls {
+      margin: 20px 130px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    label {
+      font-size: 16px;
+    }
+
+    .viewer-container {
+      display: flex;
+      gap: 40px;
+      margin-left: 130px;
+      align-items: flex-start;
+    }
+
+    #threedd {
+      width: 1000px;
+      height: 700px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      background-color: #fff;
+    }
+
+    .description-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .description-card h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .description-card p {
+      margin: 8px 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .navigation {
+      margin: 30px 130px;
+      display: flex;
+      justify-content: space-between;
+      width: 300px;
+    }
+
+    .navigation button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .navigation button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls for color and size -->
+  <div class="controls">
+    <label for="colorPicker">Choose Table Color:</label>
+    <input type="color" id="colorPicker" value="#b5651d" />
+
+    <label for="sizeSlider">Table Size:</label>
+    <input type="range" id="sizeSlider" min="0.5" max="2" step="0.1" value="1" />
+  </div>
+
+  <!-- Viewer and Description Side by Side -->
+  <div class="viewer-container">
+    <!-- 3D Model Viewer -->
+    <model-viewer id="threedd"
+      src="studylaptop_table.glb"
+      autoplay
+      camera-controls
+      disable-zoom
+      auto-rotate
+      shadow-intensity="1"
+      exposure="1"
+      environment-image="neutral"
+      interaction-prompt="none"
+      scale="1 1 1">
+    </model-viewer>
+
+    <!-- Table Description Card -->
+    <div class="description-card">
+      <h2>Table Model #12</h2>
+      <p><strong>Type:</strong> Radial Work Table</p>
+      <p><strong>Material:</strong> Solid Wood</p>
+      <p><strong>Color:</strong> Customizable</p>
+      <p><strong>Dimensions:</strong> Adjustable (via slider)</p>
+      <p><strong>Price:</strong> $299.99</p>
+      <p><strong>Description:</strong> A durable and spacious radial work table, ideal for modern workspaces or home offices. Adjustable in size and color to match your needs.</p>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="navigation">
+    <a href="3dmodel2.html"><button>← Previous</button></a>
+
+  </div>
+
+  <!-- Load model-viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+  <!-- Script to change color and size -->
+  <script>
+    const modelViewer = document.querySelector("model-viewer");
+    const colorPicker = document.getElementById("colorPicker");
+    const sizeSlider = document.getElementById("sizeSlider");
+
+    modelViewer.addEventListener("load", () => {
+      const material = modelViewer.model.materials[0];
+
+      colorPicker.addEventListener("input", () => {
+        const color = colorPicker.value;
+        material.pbrMetallicRoughness.setBaseColorFactor(hexToRgbA(color));
+      });
+    });
+
+    function hexToRgbA(hex) {
+      const r = parseInt(hex.substr(1, 2), 16) / 255;
+      const g = parseInt(hex.substr(3, 2), 16) / 255;
+      const b = parseInt(hex.substr(5, 2), 16) / 255;
+      return [r, g, b, 1];
+    }
+
+    sizeSlider.addEventListener("input", () => {
+      const scaleValue = sizeSlider.value;
+      modelViewer.setAttribute("scale", `${scaleValue} ${scaleValue} ${scaleValue}`);
+    });
+  </script>
+
+</body>
+</html>
