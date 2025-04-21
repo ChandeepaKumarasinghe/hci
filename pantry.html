@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantry Collection - Green Furniture Shop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Green Furniture Shop</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pantry.html" class="active">Pantry</a></li>
+                <li><a href="living.html">Living</a></li>
+                <li><a href="dining.html">Dining</a></li>
+                <li><a href="bedroom.html">Bedroom</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="category-page">
+        <h1>Pantry Collection</h1>
+        <p class="category-description">Organize your kitchen with our sustainable pantry solutions, crafted from reclaimed wood and eco-friendly materials.</p>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div id="model-container-1" class="model-viewer"></div>
+                <h3>Eco Pantry Cabinet</h3>
+                <p class="price">$499.99</p>
+                <p class="description">Spacious cabinet made from reclaimed oak with adjustable shelves.</p>
+                <button class="btn-view" onclick="showDetails('pantry-cabinet')">View Details</button>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div id="model-container-2" class="model-viewer"></div>
+                <h3>Bamboo Storage Shelves</h3>
+                <p class="price">$299.99</p>
+                <p class="description">Modular shelving system perfect for any pantry space.</p>
+                <button class="btn-view" onclick="showDetails('bamboo-shelves')">View Details</button>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div id="model-container-3" class="model-viewer"></div>
+                <h3>Recycled Glass Jars Set</h3>
+                <p class="price">$89.99</p>
+                <p class="description">Set of 12 airtight containers made from recycled glass.</p>
+                <button class="btn-view" onclick="showDetails('glass-jars')">View Details</button>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div id="model-container-4" class="model-viewer"></div>
+                <h3>Compact Spice Rack</h3>
+                <p class="price">$129.99</p>
+                <p class="description">Space-saving spice organizer with 24 slots.</p>
+                <button class="btn-view" onclick="showDetails('spice-rack')">View Details</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Product Details Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <div id="modal-model-view" class="model-viewer-large"></div>
+                <div class="modal-details">
+                    <h2 id="modal-title">Product Title</h2>
+                    <p id="modal-price" class="price">$0.00</p>
+                    <p id="modal-description">Product description goes here.</p>
+                    <div class="specs">
+                        <h4>Specifications</h4>
+                        <ul id="modal-specs">
+                            <li>Material: Reclaimed wood</li>
+                            <li>Dimensions: 24" x 36" x 18"</li>
+                            <li>Weight: 45 lbs</li>
+                            <li>Assembly: Required</li>
+                        </ul>
+                    </div>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Same footer as index.html -->
+    </footer>
+
+    <script src="js/models.js"></script>
+    <script src="js/three-app.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Load models for this page
+        window.addEventListener('load', () => {
+            loadModel('model-container-1', 'assets/models/pantry-cabinet.glb');
+            loadModel('model-container-2', 'assets/models/bamboo-shelves.glb');
+            loadModel('model-container-3', 'assets/models/glass-jars.glb');
+            loadModel('model-container-4', 'assets/models/spice-rack.glb');
+        });
+
+        // Product data for this category
+        const pantryProducts = {
+            'pantry-cabinet': {
+                title: 'Eco Pantry Cabinet',
+                price: '$499.99',
+                description: 'This spacious cabinet is crafted from reclaimed oak and features three adjustable shelves to accommodate items of various sizes. The natural wood grain ensures each piece is unique.',
+                specs: [
+                    'Material: Reclaimed oak',
+                    'Dimensions: 36" W x 18" D x 72" H',
+                    'Weight: 85 lbs',
+                    'Assembly: Required (tools included)',
+                    'Finish: Natural oil'
+                ]
+            },
+            'bamboo-shelves': {
+                title: 'Bamboo Storage Shelves',
+                price: '$299.99',
+                description: 'Our modular shelving system is made from sustainable bamboo and can be configured to fit any pantry space. Each unit comes with 4 shelves and mounting hardware.',
+                specs: [
+                    'Material: Bamboo',
+                    'Dimensions: 24" W x 12" D (per module)',
+                    'Weight: 25 lbs per module',
+                    'Assembly: Minimal assembly required',
+                    'Expandable: Add more modules as needed'
+                ]
+            },
+            'glass-jars': {
+                title: 'Recycled Glass Jars Set',
+                price: '$89.99',
+                description: 'Set of 12 airtight containers made from 100% recycled glass with bamboo lids. Perfect for storing dry goods, spices, and more while keeping them fresh.',
+                specs: [
+                    'Material: Recycled glass, bamboo lids',
+                    'Sizes: 4 x 16oz, 4 x 32oz, 4 x 64oz',
+                    'Airtight seal: Yes',
+                    'Dishwasher safe: Yes',
+                    'BPA-free: Yes'
+                ]
+            },
+            'spice-rack': {
+                title: 'Compact Spice Rack',
+                price: '$129.99',
+                description: 'This space-saving spice organizer features 24 slots with easy-access design. Made from reclaimed wood with a natural finish to complement any kitchen decor.',
+                specs: [
+                    'Material: Reclaimed pine',
+                    'Dimensions: 18" W x 6" D x 12" H',
+                    'Weight: 8 lbs',
+                    'Assembly: Ready to use',
+                    'Mounting: Wall mount or countertop'
+                ]
+            }
+        };
+
+        function showDetails(productId) {
+            const product = pantryProducts[productId];
+            document.getElementById('modal-title').textContent = product.title;
+            document.getElementById('modal-price').textContent = product.price;
+            document.getElementById('modal-description').textContent = product.description;
+            
+            const specsList = document.getElementById('modal-specs');
+            specsList.innerHTML = '';
+            product.specs.forEach(spec => {
+                const li = document.createElement('li');
+                li.textContent = spec;
+                specsList.appendChild(li);
+            });
+
+            // Load the detailed model
+            loadModel('modal-model-view', `assets/models/${productId}.glb`, true);
+            
+            // Show modal
+            document.getElementById('product-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
