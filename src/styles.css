@@ -1,0 +1,261 @@
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  .app-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+  
+  /* Room Designer Container */
+  .room-designer-container {
+    display: flex;
+    height: calc(100vh - 100px);
+    gap: 20px;
+  }
+  
+  .threejs-container {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* UI Panel */
+  .ui-panel {
+    width: 350px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .ui-section {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .ui-section h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.2em;
+  }
+  
+  .subsection {
+    margin-top: 15px;
+  }
+  
+  .subsection h4, .subsection h5 {
+    margin: 10px 0;
+    color: #34495e;
+    font-size: 1em;
+  }
+  
+  /* Button Styles */
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  button.active {
+    background-color: #2c3e50;
+  }
+  
+  /* Furniture Item Styles */
+  .furniture-item {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .item-header span {
+    font-weight: bold;
+  }
+  
+  .item-header button {
+    background-color: #e74c3c;
+    padding: 4px 8px;
+    font-size: 0.8em;
+  }
+  
+  .item-header button:hover {
+    background-color: #c0392b;
+  }
+  
+  .item-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .position-controls, .size-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .position-controls label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .position-controls input {
+    width: 60px;
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .size-controls select {
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  /* Color Picker Styles */
+  .color-picker {
+    margin-bottom: 15px;
+  }
+  
+  .color-picker label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .color-picker input[type="color"] {
+    width: 50px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid #ddd;
+  }
+  
+  .predefined-colors {
+    margin-top: 15px;
+  }
+  
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .color-swatch {
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    transition: transform 0.2s;
+  }
+  
+  .color-swatch:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Texture Styles */
+  .texture-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .texture-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .texture-swatch img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .texture-swatch span {
+    font-size: 0.8em;
+    margin-top: 4px;
+    text-align: center;
+  }
+  
+  .custom-texture {
+    margin-top: 15px;
+  }
+  
+  .texture-preview {
+    max-width: 100px;
+    max-height: 100px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 1200px) {
+    .room-designer-container {
+      flex-direction: column;
+      height: auto;
+    }
+    
+    .threejs-container {
+      height: 500px;
+    }
+    
+    .ui-panel {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .button-group {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .color-grid, .texture-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
