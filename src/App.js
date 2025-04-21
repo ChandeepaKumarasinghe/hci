@@ -21,6 +21,7 @@ function App() {
           {/* Auth Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/roomdesigner" element={<RoomDesigner />} />
 
           {/* Redirect any unknown paths to home */}
           <Route path="*" element={<Navigate to="/" />} />
