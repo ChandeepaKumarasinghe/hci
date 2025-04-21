@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AuthStyles.css'; // We'll create this for shared styles
+import './login&reg.css'; // We'll create this for shared styles
 
 const Login = () => {
     const navigate = useNavigate();
