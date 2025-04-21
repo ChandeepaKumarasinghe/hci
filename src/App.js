@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import RoomDesigner from './components/RoomDesigner';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -6,10 +7,26 @@ import './styles.css';
 
 function App() {
   return (
-    <div className="app-container">
-      <h1>3D Room Designer</h1>
-      <RoomDesigner />
-    </div>
+    <Router>
+      <div className="app-container">
+        <Routes>
+          {/* Main Room Designer Route */}
+          <Route path="/" element={
+            <>
+              <h1>3D Room Designer</h1>
+              <RoomDesigner />
+            </>
+          } />
+
+          {/* Auth Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Redirect any unknown paths to home */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
