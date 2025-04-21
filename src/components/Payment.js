@@ -5,75 +5,75 @@ const Payment = () => {
     const [cardType, setCardType] = useState('credit');
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-4">
-            <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div style={{ minHeight: '100vh', backgroundColor: '#F7FAFC', padding: '32px 16px' }}>
+            <div style={{ maxWidth: '448px', margin: '0 auto', backgroundColor: '#FFFFFF', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
                 {/* Header */}
-                <div className="bg-blue-600 p-6 text-white">
-                    <h1 className="text-2xl font-bold">Checkout</h1>
+                <div style={{ backgroundColor: '#2563EB', padding: '24px', color: '#FFFFFF' }}>
+                    <h1 style={{ fontSize: '24px', fontWeight: '700' }}>Checkout</h1>
                 </div>
 
                 {/* Main Content */}
-                <div className="p-6">
+                <div style={{ padding: '24px' }}>
                     {/* Card Type Section */}
-                    <div className="mb-8">
-                        <h2 className="text-lg font-semibold mb-4 text-gray-700">Card Type</h2>
-                        <div className="flex space-x-6 mb-6">
-                            <div className="flex items-center">
+                    <div style={{ marginBottom: '32px' }}>
+                        <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>Card Type</h2>
+                        <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <input
                                     type="radio"
                                     id="credit"
                                     name="cardType"
                                     checked={cardType === 'credit'}
                                     onChange={() => setCardType('credit')}
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                    style={{ height: '16px', width: '16px', border: '1px solid #D1D5DB', marginRight: '8px' }}
                                 />
-                                <label htmlFor="credit" className="ml-2 block text-sm text-gray-700">
+                                <label htmlFor="credit" style={{ fontSize: '14px', color: '#374151' }}>
                                     Credit Card
                                 </label>
                             </div>
-                            <div className="flex items-center">
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <input
                                     type="radio"
                                     id="debit"
                                     name="cardType"
                                     checked={cardType === 'debit'}
                                     onChange={() => setCardType('debit')}
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                    style={{ height: '16px', width: '16px', border: '1px solid #D1D5DB', marginRight: '8px' }}
                                 />
-                                <label htmlFor="debit" className="ml-2 block text-sm text-gray-700">
+                                <label htmlFor="debit" style={{ fontSize: '14px', color: '#374151' }}>
                                     Debit Card
                                 </label>
                             </div>
                         </div>
 
                         {/* Card Details Section */}
-                        <h2 className="text-lg font-semibold mb-4 text-gray-700">Card Detail</h2>
-                        <div className="space-y-4">
+                        <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>Card Detail</h2>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             <div>
-                                <label className="block text-sm font-medium text-gray-500 mb-1">Name On Card</label>
-                                <div className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-50">
+                                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#6B7280', marginBottom: '4px' }}>Name On Card</label>
+                                <div style={{ marginTop: '4px', padding: '8px', border: '1px solid #D1D5DB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                                     Harvey Olson
                                 </div>
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-500 mb-1">Card Number</label>
-                                <div className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-50">
+                                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#6B7280', marginBottom: '4px' }}>Card Number</label>
+                                <div style={{ marginTop: '4px', padding: '8px', border: '1px solid #D1D5DB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                                     3787-3449-3626-0712
                                 </div>
-                                <span className="text-xs text-gray-500 mt-1">VISA</span>
+                                <span style={{ display: 'block', fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>VISA</span>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500 mb-1">Expires On</label>
-                                    <div className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-50">
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#6B7280', marginBottom: '4px' }}>Expires On</label>
+                                    <div style={{ marginTop: '4px', padding: '8px', border: '1px solid #D1D5DB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                                         04 / 24
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-500 mb-1">CVV Code</label>
-                                    <div className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-50">
+                                    <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', color: '#6B7280', marginBottom: '4px' }}>CVV Code</label>
+                                    <div style={{ marginTop: '4px', padding: '8px', border: '1px solid #D1D5DB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
                                         •••
                                     </div>
                                 </div>
@@ -81,25 +81,36 @@ const Payment = () => {
                         </div>
 
                         {/* Save Card Option */}
-                        <div className="mt-6 flex items-center">
+                        <div style={{ marginTop: '24px', display: 'flex', alignItems: 'center' }}>
                             <input
                                 id="save-card"
                                 name="save-card"
                                 type="checkbox"
                                 checked={saveCard}
                                 onChange={() => setSaveCard(!saveCard)}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                style={{ height: '16px', width: '16px', border: '1px solid #D1D5DB', borderRadius: '4px', marginRight: '8px' }}
                             />
-                            <label htmlFor="save-card" className="ml-2 block text-sm text-gray-700">
+                            <label htmlFor="save-card" style={{ fontSize: '14px', color: '#374151' }}>
                                 Security save this card for a faster checkout next time
                             </label>
                         </div>
 
                         {/* Pay Button */}
-                        <div className="mt-8">
+                        <div style={{ marginTop: '32px' }}>
                             <button
                                 type="button"
-                                className="w-full bg-blue-600 py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: '#2563EB',
+                                    padding: '12px 16px',
+                                    border: '1px solid transparent',
+                                    borderRadius: '6px',
+                                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                                    fontSize: '18px',
+                                    fontWeight: '500',
+                                    color: '#FFFFFF',
+                                    cursor: 'pointer'
+                                }}
                             >
                                 Pay $195.30
                             </button>
@@ -107,13 +118,13 @@ const Payment = () => {
                     </div>
 
                     {/* Shipping Section */}
-                    <div className="border-t border-gray-200 pt-6">
-                        <h2 className="text-lg font-semibold mb-4 text-gray-700">Shipping To</h2>
-                        <div className="p-4 border border-gray-200 rounded-md bg-gray-50">
-                            <p className="font-medium">Harvey Olson</p>
-                            <p className="text-gray-600">4564 Loyman Avenue</p>
-                            <p className="text-gray-600">Fayetteville North Carolina, 25314</p>
-                            <p className="text-gray-600 mt-2">Mobile: <span className="font-medium">910-818-4705</span></p>
+                    <div style={{ borderTop: '1px solid #E5E7EB', paddingTop: '24px' }}>
+                        <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>Shipping To</h2>
+                        <div style={{ padding: '16px', border: '1px solid #E5E7EB', borderRadius: '6px', backgroundColor: '#F9FAFB' }}>
+                            <p style={{ fontWeight: '500' }}>Harvey Olson</p>
+                            <p style={{ color: '#4B5563' }}>4564 Loyman Avenue</p>
+                            <p style={{ color: '#4B5563' }}>Fayetteville North Carolina, 25314</p>
+                            <p style={{ color: '#4B5563', marginTop: '8px' }}>Mobile: <span style={{ fontWeight: '500' }}>910-818-4705</span></p>
                         </div>
                     </div>
                 </div>
