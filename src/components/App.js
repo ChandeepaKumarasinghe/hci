@@ -15,7 +15,24 @@ function App() {
           {/* Main Room Designer Route */}
           <Route path="/" element={
             <>
-              <h1>3D Room Designer</h1>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '10px'
+              }}>
+                <h1> &nbsp; 3D Room Designer </h1> <a href="/login" style={{
+                  backgroundColor: '#28a745',
+                  color: 'white',
+                  padding: '10px 20px',
+                  textDecoration: 'none',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  display: 'inline-block',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'background-color 0.3s',
+                }}>Login</a>
+              </div>
               <RoomDesigner />
             </>
           } />
