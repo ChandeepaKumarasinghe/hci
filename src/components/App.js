@@ -25,7 +25,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/roomdesigner" element={<RoomDesigner />} />
           <Route path="/payment" element={<Payment />} />
-          <Route path="/adminaanel" element={<AdminPanel />} />
+          <Route path="/adminpanel" element={<AdminPanel />} />
 
           {/* Redirect any unknown paths to home */}
           <Route path="*" element={<Navigate to="/" />} />
