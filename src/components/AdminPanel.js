@@ -48,18 +48,18 @@ const AdminDashboard = () => {
   };
 
   const handlePromoteUser = (id) => {
-    setUsers(users.map(user => 
+    setUsers(users.map(user =>
       user.id === id ? { ...user, role: 'Admin' } : user
     ));
   };
 
   // Filter data based on search term
-  const filteredPayments = payments.filter(payment => 
+  const filteredPayments = payments.filter(payment =>
     payment.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
     payment.customer.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const filteredUsers = users.filter(user => 
+  const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -94,9 +94,9 @@ const AdminDashboard = () => {
             color: '#bdc3c7'
           }}>Administrator Panel</p>
         </div>
-        
+
         <nav style={{ marginTop: '20px' }}>
-          <button 
+          <button
             onClick={() => setActiveTab('furniture')}
             style={{
               display: 'block',
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
           >
             Furniture Management
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('payments')}
             style={{
               display: 'block',
@@ -130,7 +130,7 @@ const AdminDashboard = () => {
           >
             Payment Details
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('users')}
             style={{
               display: 'block',
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
                 margin: '20px 0 15px',
                 color: '#34495e'
               }}>Add New Furniture Item</h2>
-              
+
               <form onSubmit={handleAddFurniture} style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
@@ -216,7 +216,7 @@ const AdminDashboard = () => {
                   <input
                     type="text"
                     value={newFurniture.name}
-                    onChange={(e) => setNewFurniture({...newFurniture, name: e.target.value})}
+                    onChange={(e) => setNewFurniture({ ...newFurniture, name: e.target.value })}
                     required
                     style={{
                       width: '100%',
@@ -226,7 +226,7 @@ const AdminDashboard = () => {
                     }}
                   />
                 </div>
-                
+
                 <div>
                   <label style={{
                     display: 'block',
@@ -236,7 +236,7 @@ const AdminDashboard = () => {
                   }}>Category</label>
                   <select
                     value={newFurniture.category}
-                    onChange={(e) => setNewFurniture({...newFurniture, category: e.target.value})}
+                    onChange={(e) => setNewFurniture({ ...newFurniture, category: e.target.value })}
                     required
                     style={{
                       width: '100%',
@@ -253,7 +253,7 @@ const AdminDashboard = () => {
                     <option value="Outdoor">Outdoor</option>
                   </select>
                 </div>
-                
+
                 <div>
                   <label style={{
                     display: 'block',
@@ -264,7 +264,7 @@ const AdminDashboard = () => {
                   <input
                     type="number"
                     value={newFurniture.price}
-                    onChange={(e) => setNewFurniture({...newFurniture, price: e.target.value})}
+                    onChange={(e) => setNewFurniture({ ...newFurniture, price: e.target.value })}
                     required
                     min="0"
                     step="0.01"
@@ -276,7 +276,7 @@ const AdminDashboard = () => {
                     }}
                   />
                 </div>
-                
+
                 <div>
                   <label style={{
                     display: 'block',
@@ -287,7 +287,7 @@ const AdminDashboard = () => {
                   <input
                     type="number"
                     value={newFurniture.stock}
-                    onChange={(e) => setNewFurniture({...newFurniture, stock: e.target.value})}
+                    onChange={(e) => setNewFurniture({ ...newFurniture, stock: e.target.value })}
                     required
                     min="0"
                     style={{
@@ -298,7 +298,7 @@ const AdminDashboard = () => {
                     }}
                   />
                 </div>
-                
+
                 <div style={{ gridColumn: '1 / -1' }}>
                   <button type="submit" style={{
                     padding: '10px 20px',
@@ -314,19 +314,20 @@ const AdminDashboard = () => {
                   </button>
                 </div>
               </form>
-              
+
               <h2 style={{
                 fontSize: '18px',
                 margin: '20px 0 15px',
                 color: '#34495e'
               }}>Current Inventory</h2>
-              
+
               <div style={{
                 overflowX: 'auto'
               }}>
                 <table style={{
                   width: '100%',
-                  borderCollapse: 'collapse'
+                  borderCollapse: 'collapse',
+                  color: 'black'
                 }}>
                   <thead>
                     <tr style={{
@@ -355,7 +356,7 @@ const AdminDashboard = () => {
                         <td style={{ padding: '12px 15px' }}>${item.price.toFixed(2)}</td>
                         <td style={{ padding: '12px 15px' }}>{item.stock}</td>
                         <td style={{ padding: '12px 15px' }}>
-                          <button 
+                          <button
                             onClick={() => handleDeleteFurniture(item.id)}
                             style={{
                               padding: '6px 12px',
@@ -386,7 +387,8 @@ const AdminDashboard = () => {
             }}>
               <table style={{
                 width: '100%',
-                borderCollapse: 'collapse'
+                borderCollapse: 'collapse',
+                color: 'black'
               }}>
                 <thead>
                   <tr style={{
@@ -434,7 +436,8 @@ const AdminDashboard = () => {
             }}>
               <table style={{
                 width: '100%',
-                borderCollapse: 'collapse'
+                borderCollapse: 'collapse',
+                color: 'black'
               }}>
                 <thead>
                   <tr style={{
@@ -461,7 +464,7 @@ const AdminDashboard = () => {
                       <td style={{ padding: '12px 15px' }}>{user.joinDate}</td>
                       <td style={{ padding: '12px 15px' }}>
                         {user.role === 'Customer' && (
-                          <button 
+                          <button
                             onClick={() => handlePromoteUser(user.id)}
                             style={{
                               padding: '6px 12px',
@@ -477,7 +480,7 @@ const AdminDashboard = () => {
                             Make Admin
                           </button>
                         )}
-                        <button 
+                        <button
                           onClick={() => handleDeleteUser(user.id)}
                           style={{
                             padding: '6px 12px',
