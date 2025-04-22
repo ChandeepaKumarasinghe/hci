@@ -1,139 +1,403 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './login&reg.css'; // Shared styles
 
-const Register = () => {
-    const navigate = useNavigate();
-    const [userType, setUserType] = useState('user');
-    const [passwordStrength, setPasswordStrength] = useState(0);
+const RegisterPage = () => {
+    const [activeTab, setActiveTab] = useState('user');
+    const [userData, setUserData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+    const [adminData, setAdminData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        adminKey: ''
+    });
 
-    const handleUserTypeChange = (type) => {
-        setUserType(type);
-    };
-
-    const handlePasswordChange = (e) => {
-        const value = e.target.value;
-        const strength = Math.min(value.length * 10, 100);
-        setPasswordStrength(strength);
-    };
-
-    const handleSubmit = (e) => {
+    const handleUserSubmit = (e) => {
         e.preventDefault();
+        console.log('User registration:', userData);
+        // Add user registration logic here
+    };
 
-        // Get form values
-        const name = e.target.name.value.trim();
-        const email = e.target.email.value.trim();
-        const password = e.target.password.value;
-        const confirmPassword = e.target.confirmPassword.value;
-        const adminCode = userType === 'admin' ? e.target.adminCode.value : '';
+    const handleAdminSubmit = (e) => {
+        e.preventDefault();
+        console.log('Admin registration:', adminData);
+        // Add admin registration logic here
+    };
 
-        // Simulate storing user (without validation for now)
-        const users = JSON.parse(localStorage.getItem('furni3d_users')) || [];
-        users.push({ name, email, password, role: userType });
-        localStorage.setItem('furni3d_users', JSON.stringify(users));
-        localStorage.setItem('furni3d_currentUser', JSON.stringify({ name, email, role: userType }));
+    const handleUserChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    };
 
-        // Redirect to home page
-        navigate('/');
+    const handleAdminChange = (e) => {
+        setAdminData({ ...adminData, [e.target.name]: e.target.value });
     };
 
     return (
-        <div className="auth-page">
-            <div className="auth-container">
-                <div className="auth-card">
-                    <h1 style={{ color: 'black' }}>Create Account</h1>
-                    <p style={{ color: 'black' }}>Join Furni3D to start shopping</p>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100vh',
+            fontFamily: 'Arial, sans-serif',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        }}>
+            <div style={{
+                backgroundColor: 'white',
+                padding: '30px',
+                borderRadius: '10px',
+                boxShadow: '0 15px 35px rgba(0, 0, 0, 0.2)',
+                width: '100%',
+                maxWidth: '450px'
+            }}>
+                <h2 style={{
+                    textAlign: 'center',
+                    marginBottom: '25px',
+                    color: '#333',
+                    fontSize: '28px',
+                    fontWeight: '600'
+                }}>Create Account</h2>
 
-                    <div className="user-type-selector">
-                        <button
-                            type="button"
-                            className={`user-type-btn ${userType === 'user' ? 'active' : ''}`}
-                            onClick={() => handleUserTypeChange('user')}
-                        >
-                            Regular User
-                        </button>
-                        <button
-                            type="button"
-                            className={`user-type-btn ${userType === 'admin' ? 'active' : ''}`}
-                            onClick={() => handleUserTypeChange('admin')}
-                        >
-                            Admin
-                        </button>
-                    </div>
+                <div style={{
+                    display: 'flex',
+                    marginBottom: '25px',
+                    borderBottom: '1px solid #eee'
+                }}>
+                    <button
+                        onClick={() => setActiveTab('user')}
+                        style={{
+                            flex: 1,
+                            padding: '12px',
+                            backgroundColor: activeTab === 'user' ? '#764ba2' : '#f5f5f5',
+                            color: activeTab === 'user' ? 'white' : '#555',
+                            border: 'none',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            borderRadius: '5px 5px 0 0',
+                            transition: 'all 0.3s'
+                        }}
+                    >
+                        User
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('admin')}
+                        style={{
+                            flex: 1,
+                            padding: '12px',
+                            backgroundColor: activeTab === 'admin' ? '#764ba2' : '#f5f5f5',
+                            color: activeTab === 'admin' ? 'white' : '#555',
+                            border: 'none',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            borderRadius: '5px 5px 0 0',
+                            transition: 'all 0.3s'
+                        }}
+                    >
+                        Admin
+                    </button>
+                </div>
 
-                    <form id="register-form" onSubmit={handleSubmit}>
-                        <input type="hidden" name="user-type" value={userType} />
-
-                        {userType === 'admin' && (
-                            <div id="admin-code-field" className="admin-code-field">
-                                <div className="form-group">
-                                    <label htmlFor="admin-code">Admin Access Code</label>
-                                    <input type="password" id="admin-code" name="adminCode" placeholder="Enter admin secret code" />
-                                    <div id="admin-code-error" className="error-message"></div>
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="form-group">
-                            <label htmlFor="name" style={{ color: 'black', textAlign: 'left' }}>Full Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Enter Your Name" style={{
-
-                            }} />
-                            <div id="name-error" className="error-message"></div>
+                {activeTab === 'user' ? (
+                    <form onSubmit={handleUserSubmit}>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Full Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={userData.name}
+                                onChange={handleUserChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Enter your full name"
+                            />
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="email" style={{ color: 'black', textAlign: 'left' }}>Email Address</label>
-                            <input type="email" id="email" name="email" required placeholder="Enter Your Email Address" />
-                            <div id="email-error" className="error-message"></div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Email Address</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={userData.email}
+                                onChange={handleUserChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Enter your email"
+                            />
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password" style={{ color: 'black', textAlign: 'left' }}>Password</label>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Password</label>
                             <input
                                 type="password"
-                                id="password"
                                 name="password"
+                                value={userData.password}
+                                onChange={handleUserChange}
                                 required
-                                placeholder="Enter Your Password"
-                                onChange={handlePasswordChange}
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Create a password"
                             />
-                            <div className="password-strength">
-                                <div
-                                    className="password-strength-bar"
-                                    style={{
-                                        width: `${passwordStrength}%`,
-                                        backgroundColor: passwordStrength < 40 ? '#dc3545' :
-                                            passwordStrength < 70 ? '#ffc107' : '#28a745'
-                                    }}
-                                ></div>
-                            </div>
-                            <div id="password-error" className="error-message"></div>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="confirm-password" style={{ color: 'black', textAlign: 'left' }}>Confirm Password</label>
+                        <div style={{ marginBottom: '25px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Confirm Password</label>
                             <input
                                 type="password"
-                                id="confirm-password"
                                 name="confirmPassword"
+                                value={userData.confirmPassword}
+                                onChange={handleUserChange}
                                 required
-                                placeholder="Re-enter Your Password"
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Confirm your password"
                             />
-                            <div id="confirm-error" className="error-message"></div>
                         </div>
 
-                        <button type="submit" className="btn" >Create Account</button>
-                        <div id="success-message" className="success-message"></div>
+                        <button type="submit" style={{
+                            width: '100%',
+                            padding: '14px',
+                            backgroundColor: '#764ba2',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s',
+                            marginBottom: '20px'
+                        }} onMouseOver={(e) => e.target.style.backgroundColor = '#5d3a8a'}
+                            onMouseOut={(e) => e.target.style.backgroundColor = '#764ba2'}>
+                            Register as User
+                        </button>
                     </form>
+                ) : (
+                    <form onSubmit={handleAdminSubmit}>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Admin Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={adminData.name}
+                                onChange={handleAdminChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Enter admin name"
+                            />
+                        </div>
 
-                    <div className="auth-footer">
-                        <p style={{ color: 'black' }}>Already have an account? <a href="/login">Sign in</a></p>
-                    </div>
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Email Address</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={adminData.email}
+                                onChange={handleAdminChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Enter admin email"
+                            />
+                        </div>
+
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                value={adminData.password}
+                                onChange={handleAdminChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Create admin password"
+                            />
+                        </div>
+
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Confirm Password</label>
+                            <input
+                                type="password"
+                                name="confirmPassword"
+                                value={adminData.confirmPassword}
+                                onChange={handleAdminChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Confirm admin password"
+                            />
+                        </div>
+
+                        <div style={{ marginBottom: '25px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '8px',
+                                color: '#555',
+                                fontSize: '14px',
+                                fontWeight: '500'
+                            }}>Admin Key</label>
+                            <input
+                                type="password"
+                                name="adminKey"
+                                value={adminData.adminKey}
+                                onChange={handleAdminChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 15px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    fontSize: '16px',
+                                    transition: 'border 0.3s',
+                                    boxSizing: 'border-box'
+                                }}
+                                placeholder="Enter admin secret key"
+                            />
+                        </div>
+
+                        <button type="submit" style={{
+                            width: '100%',
+                            padding: '14px',
+                            backgroundColor: '#764ba2',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s',
+                            marginBottom: '20px'
+                        }} onMouseOver={(e) => e.target.style.backgroundColor = '#5d3a8a'}
+                            onMouseOut={(e) => e.target.style.backgroundColor = '#764ba2'}>
+                            Register as Admin
+                        </button>
+                    </form>
+                )}
+
+                <div style={{ textAlign: 'center' }}>
+                    <span style={{ color: '#777', fontSize: '14px' }}>Already have an account? </span>
+                    <a href="#login" style={{
+                        color: '#764ba2',
+                        fontSize: '14px',
+                        textDecoration: 'none',
+                        fontWeight: '500',
+                        transition: 'color 0.3s'
+                    }}>Sign in</a>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Register;
+export default RegisterPage;
