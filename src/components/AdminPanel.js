@@ -1,5 +1,5 @@
 import React from 'react';
-import './adminpanel.css';
+//import './adminpanel.css';
 
 const Sidebar = () => {
     return (
