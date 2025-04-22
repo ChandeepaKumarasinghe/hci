@@ -76,7 +76,9 @@ const Register = () => {
 
                         <div className="form-group">
                             <label htmlFor="name" style={{ color: 'black', textAlign: 'left' }}>Full Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Enter Your Name" />
+                            <input type="text" id="name" name="name" required placeholder="Enter Your Name" style={{
+
+                            }} />
                             <div id="name-error" className="error-message"></div>
                         </div>
 
