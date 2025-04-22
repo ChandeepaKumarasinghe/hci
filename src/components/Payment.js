@@ -4,7 +4,7 @@ const Payment = () => {
     const [saveCard, setSaveCard] = useState(false);
     const [cardType, setCardType] = useState('credit');
     const [isHovered, setIsHovered] = useState(false);
-    
+
     // Form state
     const [formData, setFormData] = useState({
         nameOnCard: 'Harvey Olson',
@@ -16,7 +16,7 @@ const Payment = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        
+
         // Format card number with spaces every 4 digits
         if (name === 'cardNumber') {
             const formattedValue = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
@@ -25,7 +25,7 @@ const Payment = () => {
             if (/^4/.test(value)) brand = 'VISA';
             if (/^5[1-5]/.test(value)) brand = 'MASTERCARD';
             if (/^3[47]/.test(value)) brand = 'AMEX';
-            
+
             setFormData(prev => ({
                 ...prev,
                 [name]: formattedValue,
@@ -33,7 +33,7 @@ const Payment = () => {
             }));
             return;
         }
-        
+
         // Format expiry date with slash
         if (name === 'expiryDate') {
             const formattedValue = value
@@ -46,7 +46,7 @@ const Payment = () => {
             }));
             return;
         }
-        
+
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -60,28 +60,29 @@ const Payment = () => {
     };
 
     return (
-        <div style={{ 
-            minHeight: '100vh', 
-            backgroundColor: '#f0f4f8', 
+        <div style={{
+            color: 'black',
+            minHeight: '100vh',
+            backgroundColor: '#f0f4f8',
             padding: '32px 16px',
             fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif"
         }}>
-            <div style={{ 
-                maxWidth: '480px', 
-                margin: '0 auto', 
-                backgroundColor: '#FFFFFF', 
-                borderRadius: '16px', 
+            <div style={{
+                maxWidth: '480px',
+                margin: '0 auto',
+                backgroundColor: '#FFFFFF',
+                borderRadius: '16px',
                 boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
                 overflow: 'hidden',
                 transition: 'transform 0.3s ease',
                 transform: isHovered ? 'translateY(-5px)' : 'none'
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
-                
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}>
+
                 {/* Header with gradient */}
-                <div style={{ 
-                    background: 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)', 
+                <div style={{
+                    background: 'linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)',
                     padding: '28px 24px',
                     color: '#FFFFFF',
                     position: 'relative',
@@ -105,8 +106,8 @@ const Payment = () => {
                         borderRadius: '50%',
                         background: 'rgba(255,255,255,0.05)'
                     }}></div>
-                    <h1 style={{ 
-                        fontSize: '24px', 
+                    <h1 style={{
+                        fontSize: '24px',
                         fontWeight: '700',
                         letterSpacing: '-0.5px',
                         margin: '0',
@@ -127,18 +128,18 @@ const Payment = () => {
                     <form onSubmit={handleSubmit}>
                         {/* Card Type Section */}
                         <div style={{ marginBottom: '32px' }}>
-                            <h2 style={{ 
-                                fontSize: '16px', 
-                                fontWeight: '600', 
-                                marginBottom: '16px', 
+                            <h2 style={{
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                marginBottom: '16px',
                                 color: '#1F2937',
                                 letterSpacing: '-0.25px'
                             }}>
                                 Card Type
                             </h2>
-                            <div style={{ 
-                                display: 'flex', 
-                                gap: '16px', 
+                            <div style={{
+                                display: 'flex',
+                                gap: '16px',
                                 marginBottom: '24px',
                                 backgroundColor: '#F9FAFB',
                                 padding: '8px',
@@ -183,18 +184,18 @@ const Payment = () => {
                             </div>
 
                             {/* Card Details Section */}
-                            <h2 style={{ 
-                                fontSize: '16px', 
-                                fontWeight: '600', 
-                                marginBottom: '16px', 
+                            <h2 style={{
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                marginBottom: '16px',
                                 color: '#1F2937',
                                 letterSpacing: '-0.25px'
                             }}>
                                 Card Details
                             </h2>
-                            <div style={{ 
-                                display: 'flex', 
-                                flexDirection: 'column', 
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
                                 gap: '16px',
                                 backgroundColor: '#F9FAFB',
                                 padding: '20px',
@@ -232,11 +233,11 @@ const Payment = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="nameOnCard" style={{ 
-                                        display: 'block', 
-                                        fontSize: '13px', 
-                                        fontWeight: '500', 
-                                        color: '#6B7280', 
+                                    <label htmlFor="nameOnCard" style={{
+                                        display: 'block',
+                                        fontSize: '13px',
+                                        fontWeight: '500',
+                                        color: '#6B7280',
                                         marginBottom: '6px',
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.5px'
@@ -247,12 +248,13 @@ const Payment = () => {
                                         name="nameOnCard"
                                         value={formData.nameOnCard}
                                         onChange={handleInputChange}
-                                        style={{ 
+                                        style={{
+                                            color: 'black',
                                             width: '100%',
-                                            marginTop: '4px', 
-                                            padding: '12px', 
-                                            border: '1px solid #E5E7EB', 
-                                            borderRadius: '8px', 
+                                            marginTop: '4px',
+                                            padding: '12px',
+                                            border: '1px solid #E5E7EB',
+                                            borderRadius: '8px',
                                             backgroundColor: '#FFFFFF',
                                             fontSize: '15px',
                                             fontWeight: '500',
@@ -264,11 +266,11 @@ const Payment = () => {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="cardNumber" style={{ 
-                                        display: 'block', 
-                                        fontSize: '13px', 
-                                        fontWeight: '500', 
-                                        color: '#6B7280', 
+                                    <label htmlFor="cardNumber" style={{
+                                        display: 'block',
+                                        fontSize: '13px',
+                                        fontWeight: '500',
+                                        color: '#6B7280',
                                         marginBottom: '6px',
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.5px'
@@ -281,12 +283,13 @@ const Payment = () => {
                                         onChange={handleInputChange}
                                         maxLength="19"
                                         placeholder="1234 5678 9012 3456"
-                                        style={{ 
+                                        style={{
+                                            color: 'black',
                                             width: '100%',
-                                            marginTop: '4px', 
-                                            padding: '12px', 
-                                            border: '1px solid #E5E7EB', 
-                                            borderRadius: '8px', 
+                                            marginTop: '4px',
+                                            padding: '12px',
+                                            border: '1px solid #E5E7EB',
+                                            borderRadius: '8px',
                                             backgroundColor: '#FFFFFF',
                                             fontSize: '15px',
                                             fontWeight: '500',
@@ -301,11 +304,11 @@ const Payment = () => {
 
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                     <div>
-                                        <label htmlFor="expiryDate" style={{ 
-                                            display: 'block', 
-                                            fontSize: '13px', 
-                                            fontWeight: '500', 
-                                            color: '#6B7280', 
+                                        <label htmlFor="expiryDate" style={{
+                                            display: 'block',
+                                            fontSize: '13px',
+                                            fontWeight: '500',
+                                            color: '#6B7280',
                                             marginBottom: '6px',
                                             textTransform: 'uppercase',
                                             letterSpacing: '0.5px'
@@ -318,12 +321,13 @@ const Payment = () => {
                                             onChange={handleInputChange}
                                             maxLength="7"
                                             placeholder="MM / YY"
-                                            style={{ 
+                                            style={{
+                                                color: 'black',
                                                 width: '100%',
-                                                marginTop: '4px', 
-                                                padding: '12px', 
-                                                border: '1px solid #E5E7EB', 
-                                                borderRadius: '8px', 
+                                                marginTop: '4px',
+                                                padding: '12px',
+                                                border: '1px solid #E5E7EB',
+                                                borderRadius: '8px',
                                                 backgroundColor: '#FFFFFF',
                                                 fontSize: '15px',
                                                 fontWeight: '500',
@@ -334,11 +338,11 @@ const Payment = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="cvv" style={{ 
-                                            display: 'block', 
-                                            fontSize: '13px', 
-                                            fontWeight: '500', 
-                                            color: '#6B7280', 
+                                        <label htmlFor="cvv" style={{
+                                            display: 'block',
+                                            fontSize: '13px',
+                                            fontWeight: '500',
+                                            color: '#6B7280',
                                             marginBottom: '6px',
                                             textTransform: 'uppercase',
                                             letterSpacing: '0.5px'
@@ -350,12 +354,12 @@ const Payment = () => {
                                             value={formData.cvv}
                                             onChange={handleInputChange}
                                             maxLength="4"
-                                            style={{ 
+                                            style={{
                                                 width: '100%',
-                                                marginTop: '4px', 
-                                                padding: '12px', 
-                                                border: '1px solid #E5E7EB', 
-                                                borderRadius: '8px', 
+                                                marginTop: '4px',
+                                                padding: '12px',
+                                                border: '1px solid #E5E7EB',
+                                                borderRadius: '8px',
                                                 backgroundColor: '#FFFFFF',
                                                 fontSize: '15px',
                                                 fontWeight: '500',
@@ -371,9 +375,9 @@ const Payment = () => {
                             </div>
 
                             {/* Save Card Option */}
-                            <div style={{ 
-                                marginTop: '24px', 
-                                display: 'flex', 
+                            <div style={{
+                                marginTop: '24px',
+                                display: 'flex',
                                 alignItems: 'center',
                                 padding: '12px',
                                 borderRadius: '8px',
@@ -386,18 +390,18 @@ const Payment = () => {
                                     type="checkbox"
                                     checked={saveCard}
                                     onChange={() => setSaveCard(!saveCard)}
-                                    style={{ 
-                                        height: '18px', 
-                                        width: '18px', 
-                                        border: '1px solid #D1D5DB', 
-                                        borderRadius: '4px', 
+                                    style={{
+                                        height: '18px',
+                                        width: '18px',
+                                        border: '1px solid #D1D5DB',
+                                        borderRadius: '4px',
                                         marginRight: '12px',
                                         cursor: 'pointer',
                                         accentColor: '#2563EB'
                                     }}
                                 />
-                                <label htmlFor="save-card" style={{ 
-                                    fontSize: '14px', 
+                                <label htmlFor="save-card" style={{
+                                    fontSize: '14px',
                                     color: '#374151',
                                     cursor: 'pointer'
                                 }}>
@@ -457,8 +461,8 @@ const Payment = () => {
                         </div>
 
                         {/* Shipping Section */}
-                        <div style={{ 
-                            borderTop: '1px solid #E5E7EB', 
+                        <div style={{
+                            borderTop: '1px solid #E5E7EB',
                             paddingTop: '24px',
                             position: 'relative'
                         }}>
@@ -472,24 +476,24 @@ const Payment = () => {
                                 backgroundColor: '#E5E7EB',
                                 borderRadius: '2px'
                             }}></div>
-                            <h2 style={{ 
-                                fontSize: '16px', 
-                                fontWeight: '600', 
-                                marginBottom: '16px', 
+                            <h2 style={{
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                marginBottom: '16px',
                                 color: '#1F2937',
                                 letterSpacing: '-0.25px',
                                 display: 'flex',
                                 alignItems: 'center'
                             }}>
                                 <svg style={{ marginRight: '8px' }} width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#6B7280"/>
+                                    <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#6B7280" />
                                 </svg>
                                 Shipping To
                             </h2>
-                            <div style={{ 
-                                padding: '20px', 
-                                border: '1px solid #E5E7EB', 
-                                borderRadius: '12px', 
+                            <div style={{
+                                padding: '20px',
+                                border: '1px solid #E5E7EB',
+                                borderRadius: '12px',
                                 backgroundColor: '#F9FAFB',
                                 position: 'relative'
                             }}>
@@ -504,19 +508,19 @@ const Payment = () => {
                                 }}>
                                     Change
                                 </div>
-                                <p style={{ 
+                                <p style={{
                                     fontWeight: '600',
                                     marginBottom: '8px'
                                 }}>Harvey Olson</p>
-                                <p style={{ 
+                                <p style={{
                                     color: '#4B5563',
                                     fontSize: '14px',
                                     lineHeight: '1.5'
                                 }}>4564 Loyman Avenue<br />
-                                Fayetteville, North Carolina 25314<br />
-                                United States</p>
-                                <p style={{ 
-                                    color: '#4B5563', 
+                                    Fayetteville, North Carolina 25314<br />
+                                    United States</p>
+                                <p style={{
+                                    color: '#4B5563',
                                     marginTop: '12px',
                                     fontSize: '14px'
                                 }}>
