@@ -41,8 +41,8 @@ const Register = () => {
         <div className="auth-page">
             <div className="auth-container">
                 <div className="auth-card">
-                    <h1>Create Account</h1>
-                    <p>Join Furni3D to start shopping</p>
+                    <h1 style={{ color: 'black' }}>Create Account</h1>
+                    <p style={{ color: 'black' }}>Join Furni3D to start shopping</p>
 
                     <div className="user-type-selector">
                         <button
@@ -75,19 +75,19 @@ const Register = () => {
                         )}
 
                         <div className="form-group">
-                            <label htmlFor="name">Full Name</label>
+                            <label htmlFor="name" style={{ color: 'black', textAlign: 'left' }}>Full Name</label>
                             <input type="text" id="name" name="name" required placeholder="Enter Your Name" />
                             <div id="name-error" className="error-message"></div>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="email">Email Address</label>
+                            <label htmlFor="email" style={{ color: 'black', textAlign: 'left' }}>Email Address</label>
                             <input type="email" id="email" name="email" required placeholder="Enter Your Email Address" />
                             <div id="email-error" className="error-message"></div>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password" style={{ color: 'black', textAlign: 'left' }}>Password</label>
                             <input
                                 type="password"
                                 id="password"
@@ -110,7 +110,7 @@ const Register = () => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="confirm-password">Confirm Password</label>
+                            <label htmlFor="confirm-password" style={{ color: 'black', textAlign: 'left' }}>Confirm Password</label>
                             <input
                                 type="password"
                                 id="confirm-password"
@@ -121,12 +121,12 @@ const Register = () => {
                             <div id="confirm-error" className="error-message"></div>
                         </div>
 
-                        <button type="submit" className="btn">Create Account</button>
+                        <button type="submit" className="btn" >Create Account</button>
                         <div id="success-message" className="success-message"></div>
                     </form>
 
                     <div className="auth-footer">
-                        <p>Already have an account? <a href="/login">Sign in</a></p>
+                        <p style={{ color: 'black' }}>Already have an account? <a href="/login">Sign in</a></p>
                     </div>
                 </div>
             </div>

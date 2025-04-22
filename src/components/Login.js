@@ -14,20 +14,20 @@ const Login = () => {
     return (
         <div className="auth-page">
             <div className="login-container">
-                <h1>Login</h1>
+                <h1 style={{ color: 'black' }}>Login</h1>
                 <form id="login-form" onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">Email address</label>
+                        <label htmlFor="email" style={{ color: 'black' }}>Email address</label>
                         <input type="email" id="email" placeholder="Enter your email" required />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password" style={{ color: 'black' }}>Password</label>
                         <input type="password" id="password" placeholder="Enter your password" required />
                     </div>
                     <button type="submit" className="btn">Login</button>
                 </form>
                 <div className="auth-footer">
-                    <p>Don't have an account? <a href="/register">Create one</a></p>
+                    <p style={{ color: 'black' }}>Don't have an account? <a href="/register">Create one</a></p>
                 </div>
             </div>
         </div>
