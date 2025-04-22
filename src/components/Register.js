@@ -387,7 +387,7 @@ const RegisterPage = () => {
 
                 <div style={{ textAlign: 'center' }}>
                     <span style={{ color: '#777', fontSize: '14px' }}>Already have an account? </span>
-                    <a href="#login" style={{
+                    <a href="/login" style={{
                         color: '#764ba2',
                         fontSize: '14px',
                         textDecoration: 'none',

@@ -144,7 +144,7 @@ const LoginPage = () => {
 
                     <div style={{ textAlign: 'center' }}>
                         <span style={{ color: '#777', fontSize: '14px' }}>Don't have an account? </span>
-                        <a href="#signup" style={{
+                        <a href="/register" style={{
                             color: '#764ba2',
                             fontSize: '14px',
                             textDecoration: 'none',
