@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCart } from './CartContext';
 import { Link } from 'react-router-dom';
+import { color } from 'three/tsl';
 
 function Cart() {
   const { cart, total, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -8,7 +9,7 @@ function Cart() {
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Your Shopping Cart</h1>
-      
+
       {cart.length === 0 ? (
         <div style={styles.emptyCart}>
           <p>Your cart is empty</p>
@@ -48,7 +49,7 @@ function Cart() {
               </div>
             ))}
           </div>
-          
+
           <div style={styles.summary}>
             <h2>Order Summary</h2>
             <div style={styles.summaryRow}>
@@ -83,7 +84,8 @@ const styles = {
   header: {
     textAlign: 'center',
     marginBottom: '30px',
-    color: '#2c3e50'
+    //color: '#2c3e50'
+    color: 'white'
   },
   emptyCart: {
     textAlign: 'center',
@@ -144,17 +146,23 @@ const styles = {
     padding: '20px',
     backgroundColor: '#f8f9fa',
     borderRadius: '8px',
-    marginLeft: '40px',
+    // margin: 0,
+    marginTop: '20px',
+    marginLeft: '20px',
+    color: 'black',
     '@media (max-width: 768px)': {
       width: '100%',
       marginLeft: '0',
-      marginTop: '30px'
+      marginTop: '30px',
+      color: 'black'
     }
   },
   summaryRow: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '15px 0'
+    //margin: '15px 0',
+    margin: '15px 0',
+    color: 'black'
   },
   total: {
     fontWeight: 'bold',
@@ -171,6 +179,7 @@ const styles = {
     textDecoration: 'none',
     borderRadius: '4px',
     marginTop: '20px',
+    marginRight: '100px',
     transition: 'background-color 0.3s',
     ':hover': {
       backgroundColor: '#1a252f'
