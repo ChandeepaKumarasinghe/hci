@@ -8,10 +8,10 @@ function AdminDashboard() {
 
   // Sample data for demonstration
   const sampleModels = [
-    { id: 1, name: 'Modern Sofa', category: 'sofa', price: 899.99, status: 'active', date: '2023-05-15' },
-    { id: 2, name: 'Office Chair', category: 'office-chair', price: 249.99, status: 'active', date: '2023-06-02' },
-    { id: 3, name: 'Dining Table', category: 'table', price: 599.99, status: 'inactive', date: '2023-04-20' },
-    { id: 4, name: 'King Size Bed', category: 'bed', price: 1299.99, status: 'active', date: '2023-07-10' },
+    { id: 1, name: 'sofa', category: 'sofa', price: 899.99, status: 'active', date: '2023-05-15' },
+    { id: 2, name: 'Chair', category: 'office-chair', price: 249.99, status: 'active', date: '2023-06-02' },
+    { id: 3, name: 'Table', category: 'table', price: 599.99, status: 'inactive', date: '2023-04-20' },
+    { id: 4, name: 'bed', category: 'bed', price: 1299.99, status: 'active', date: '2023-07-10' },
     { id: 5, name: 'Bookshelf', category: 'cabinet', price: 349.99, status: 'active', date: '2023-03-28' },
   ];
 
