@@ -1,4 +1,5 @@
 import React from 'react';
+import './m.css';
 
 const predefinedTextures = [
   { name: 'Wood', url: './assets/textures/wood.jpg' },

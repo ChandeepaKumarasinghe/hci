@@ -1,131 +1,126 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
-    const handleSubmitAsRole = (role) => {
-        console.log(`${role} login submitted:`, { email, password, rememberMe });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Authentication logic here
+    if (isAdmin) {
+      navigate('/admin');
+    } else {
+      navigate('/');
+    }
+  };
 
-        // You can handle logic based on role here
-        if (role === 'admin') {
-            // Admin login logic or redirect
-            window.location.href = '/adminpanel';
-        } else if (role === 'user') {
-            // User login logic or redirect
-            alert('User login clicked');
-        }
-    };
+  return React.createElement("div", { style: styles.container },
+    React.createElement("form", { onSubmit: handleSubmit, style: styles.form },
+      React.createElement("h2", null, "Login"),
+      
+      React.createElement("div", { style: styles.toggle },
+        React.createElement("button", {
+          type: 'button',
+          style: isAdmin ? styles.toggleButton : { ...styles.toggleButton, ...styles.activeToggle },
+          onClick: () => setIsAdmin(false)
+        }, "User"),
+        React.createElement("button", {
+          type: 'button',
+          style: isAdmin ? { ...styles.toggleButton, ...styles.activeToggle } : styles.toggleButton,
+          onClick: () => setIsAdmin(true)
+        }, "Admin")
+      ),
+      
+      React.createElement("div", { style: styles.formGroup },
+        React.createElement("label", null, "Email"),
+        React.createElement("input", {
+          type: 'email',
+          value: email,
+          onChange: (e) => setEmail(e.target.value),
+          required: true,
+          style: styles.input
+        })
+      ),
+      
+      React.createElement("div", { style: styles.formGroup },
+        React.createElement("label", null, "Password"),
+        React.createElement("input", {
+          type: 'password',
+          value: password,
+          onChange: (e) => setPassword(e.target.value),
+          required: true,
+          style: styles.input
+        })
+      ),
+      
+      React.createElement("button", { type: 'submit', style: styles.submitButton }, "Login"),
+      
+      React.createElement("p", null,
+        "Don't have an account? ",
+        React.createElement(Link, { to: "/register", style: styles.link }, "Register")
+      )
+    )
+  );
+}
 
-    return (
-        <div style={{
-            maxWidth: '400px',
-            margin: '40px auto',
-            padding: '40px',
-            borderRadius: '15px',
-            boxShadow: '0 0 15px rgba(0,0,0,0.2)',
-            background: '#ffffff'
-        }}>
-            <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#333' }}>Sign In</h2>
-
-            <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', marginBottom: '6px', color: '#555' }}>Email</label>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{
-                        width: '100%',
-                        padding: '12px',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc'
-                    }}
-                    placeholder="Enter your email"
-                />
-            </div>
-
-            <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', marginBottom: '6px', color: '#555' }}>Password</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    style={{
-                        width: '100%',
-                        padding: '12px',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc'
-                    }}
-                    placeholder="Enter your password"
-                />
-            </div>
-
-            <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
-                <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    style={{ marginRight: '8px' }}
-                />
-                <label style={{ color: '#555' }}>Remember me</label>
-            </div>
-
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-                <button
-                    type="button"
-                    onClick={() => handleSubmitAsRole('admin')}
-                    style={{
-                        flex: 1,
-                        padding: '14px',
-                        backgroundColor: '#764ba2',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.3s'
-                    }}
-                    onMouseOver={(e) => e.target.style.backgroundColor = '#5d3a8a'}
-                    onMouseOut={(e) => e.target.style.backgroundColor = '#764ba2'}
-                >
-                    Admin Sign In
-                </button>
-
-                <button
-                    type="button"
-                    onClick={() => handleSubmitAsRole('user')}
-                    style={{
-                        flex: 1,
-                        padding: '14px',
-                        backgroundColor: '#764ba2',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        fontSize: '16px',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.3s'
-                    }}
-                    onMouseOver={(e) => e.target.style.backgroundColor = '#5d3a8a'}
-                    onMouseOut={(e) => e.target.style.backgroundColor = '#764ba2'}
-                >
-                    User Sign In
-                </button>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-                <span style={{ color: '#777', fontSize: '14px' }}>Don't have an account? </span>
-                <a href="/register" style={{
-                    color: '#764ba2',
-                    fontSize: '14px',
-                    textDecoration: 'none',
-                    fontWeight: '500',
-                    transition: 'color 0.3s'
-                }}>Sign up</a>
-            </div>
-        </div>
-    );
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '80vh'
+  },
+  form: {
+    width: '100%',
+    maxWidth: '400px',
+    padding: '20px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+  },
+  toggle: {
+    display: 'flex',
+    marginBottom: '20px'
+  },
+  toggleButton: {
+    flex: 1,
+    padding: '10px',
+    border: '1px solid #ddd',
+    backgroundColor: 'white',
+    cursor: 'pointer'
+  },
+  activeToggle: {
+    backgroundColor: '#2c3e50',
+    color: 'white'
+  },
+  formGroup: {
+    marginBottom: '15px'
+  },
+  input: {
+    width: '100%',
+    padding: '10px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    marginTop: '5px'
+  },
+  submitButton: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#2c3e50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    marginTop: '10px'
+  },
+  link: {
+    color: '#2c3e50',
+    textDecoration: 'none',
+    fontWeight: 'bold'
+  }
 };
 
-export default LoginForm;
+export default Login;
