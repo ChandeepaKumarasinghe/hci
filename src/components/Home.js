@@ -60,18 +60,18 @@ function Home() {
         React.createElement("h1", { style: styles.heroTitle }, "Design Your Dream Space in 3D"),
         React.createElement("p", { style: styles.heroText }, "Visualize furniture in your room before buying"),
         React.createElement("div", { style: styles.heroButtons },
-          React.createElement(Link, { 
-            to: "/designer", 
-            style: styles.primaryButton 
+          React.createElement(Link, {
+            to: "/designer",
+            style: styles.primaryButton
           }, "Start Room Designer"),
-          React.createElement(Link, { 
-            to: "/products", 
-            style: styles.secondaryButton 
+          React.createElement(Link, {
+            to: "/products",
+            style: styles.secondaryButton
           }, "Browse Products")
         )
       )
     ),
-    
+
     /* Categories Section */
     React.createElement("section", { style: styles.section },
       React.createElement("h2", { style: styles.sectionTitle }, "Shop by Category"),
@@ -95,7 +95,7 @@ function Home() {
         )
       )
     ),
-    
+
     /* Featured Products */
     React.createElement("section", { style: styles.section },
       React.createElement("h2", { style: styles.sectionTitle }, "Featured Products"),
@@ -130,12 +130,12 @@ function Home() {
         )
       )
     ),
-    
+
     /* Room Designer CTA */
     React.createElement("section", { style: styles.ctaSection },
       React.createElement("div", { style: styles.ctaContent },
-        React.createElement("h2", null, "Try Our 3D Room Designer"),
-        React.createElement("p", null, "Drag and drop furniture into your room to see how it looks"),
+        React.createElement("h2", { style: { color: 'black' } }, "Try Our 3D Room Designer"),
+        React.createElement("p", { style: { color: 'black' } }, "Drag and drop furniture into your room to see how it looks"),
         React.createElement(Link, {
           to: "/designer",
           style: styles.ctaButton
@@ -156,6 +156,7 @@ const styles = {
     backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/imagetop.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    //color: 'black',
     color: 'white',
     padding: '100px 20px',
     textAlign: 'center',
