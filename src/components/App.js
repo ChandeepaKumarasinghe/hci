@@ -10,7 +10,6 @@ import AdminDashboard from './AdminDashboard';
 import RoomDesigner from './RoomDesigner';
 import Cart from './Cart';
 import Checkout from './Checkout';
-import Aaa from './Aaa';
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
               <Route path="/payment" element={<Payment />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/designer" element={<RoomDesigner />} />
-              <Route path="/aaa" element={<Aaa />} />
 
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
