@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { color } from 'three/tsl';
 
 const featuredCategories = [
   {
@@ -240,7 +241,8 @@ const styles = {
   categoryName: {
     textAlign: 'center',
     fontSize: '22px',
-    color: '#2c3e50'
+    //color: '#2c3e50'
+    color: 'white'
   },
   productGrid: {
     display: 'grid',
