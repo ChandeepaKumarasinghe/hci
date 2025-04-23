@@ -1,681 +1,869 @@
-// import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-// const products = [
-//   { id: 1, name: 'Modern Sofa', price: 899, stock: 15 },
-//   { id: 2, name: 'King Size Bed', price: 1200, stock: 8 },
-//   { id: 3, name: 'Dining Table', price: 650, stock: 12 }
-// ];
+function AdminDashboard() {
+  const [activeSection, setActiveSection] = useState('dashboard');
+  const [models, setModels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-// const orders = [
-//   { id: 1001, customer: 'John Doe', total: 899, status: 'Shipped' },
-//   { id: 1002, customer: 'Jane Smith', total: 1850, status: 'Processing' }
-// ];
+  // Sample data for demonstration
+  const sampleModels = [
+    { id: 1, name: 'Modern Sofa', category: 'sofa', price: 899.99, status: 'active', date: '2023-05-15' },
+    { id: 2, name: 'Office Chair', category: 'office-chair', price: 249.99, status: 'active', date: '2023-06-02' },
+    { id: 3, name: 'Dining Table', category: 'table', price: 599.99, status: 'inactive', date: '2023-04-20' },
+    { id: 4, name: 'King Size Bed', category: 'bed', price: 1299.99, status: 'active', date: '2023-07-10' },
+    { id: 5, name: 'Bookshelf', category: 'cabinet', price: 349.99, status: 'active', date: '2023-03-28' },
+  ];
 
-// function AdminDashboard() {
-//   const [activeTab, setActiveTab] = useState('products');
+  useEffect(() => {
+    // Simulate loading data
+    setIsLoading(true);
+    setTimeout(() => {
+      setModels(sampleModels);
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
-//   return React.createElement("div", { style: styles.container },
-//     React.createElement("h1", null, "Admin Dashboard"),
+  const formatCategory = (category) => {
+    const words = category.split('-');
+    return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
 
-//     React.createElement("div", { style: styles.tabs },
-//       React.createElement("button", {
-//         style: activeTab === 'products' ? { ...styles.tabButton, ...styles.activeTab } : styles.tabButton,
-//         onClick: () => setActiveTab('products')
-//       }, "Products"),
-//       React.createElement("button", {
-//         style: activeTab === 'orders' ? { ...styles.tabButton, ...styles.activeTab } : styles.tabButton,
-//         onClick: () => setActiveTab('orders')
-//       }, "Orders"),
-//       React.createElement("button", {
-//         style: activeTab === 'users' ? { ...styles.tabButton, ...styles.activeTab } : styles.tabButton,
-//         onClick: () => setActiveTab('users')
-//       }, "Users")
-//     ),
+  const showNotification = (message, type) => {
+    // In a real app, you would implement a proper notification system
+    alert(`${type.toUpperCase()}: ${message}`);
+  };
 
-//     activeTab === 'products' && React.createElement("div", { style: styles.tabContent },
-//       React.createElement("div", { style: styles.header },
-//         React.createElement("h2", null, "Product Management"),
-//         React.createElement(Link, { to: "/admin/products/new", style: styles.addButton }, "Add Product")
-//       ),
-//       React.createElement("table", { style: styles.table },
-//         React.createElement("thead", null,
-//           React.createElement("tr", null,
-//             React.createElement("th", null, "ID"),
-//             React.createElement("th", null, "Name"),
-//             React.createElement("th", null, "Price"),
-//             React.createElement("th", null, "Stock"),
-//             React.createElement("th", null, "Actions")
-//           )
-//         ),
-//         React.createElement("tbody", null,
-//           products.map(product =>
-//             React.createElement("tr", { key: product.id },
-//               React.createElement("td", null, product.id),
-//               React.createElement("td", null, product.name),
-//               React.createElement("td", null, `$${product.price}`),
-//               React.createElement("td", null, product.stock),
-//               React.createElement("td", null,
-//                 React.createElement(Link, { 
-//                   to: `/admin/products/edit/${product.id}`,
-//                   style: styles.actionButton 
-//                 }, "Edit"),
-//                 React.createElement("button", { 
-//                   style: { ...styles.actionButton, ...styles.deleteButton },
-//                   onClick: () => console.log(`Delete ${product.id}`)
-//                 }, "Delete")
-//               )
-//             )
-//           )
-//         )
-//       )
-//     ),
+  const previewModel = (modelId) => {
+    showNotification(`Previewing model #${modelId}`, 'success');
+  };
 
-//     activeTab === 'orders' && React.createElement("div", { style: styles.tabContent },
-//       React.createElement("h2", null, "Order Management"),
-//       React.createElement("table", { style: styles.table },
-//         React.createElement("thead", null,
-//           React.createElement("tr", null,
-//             React.createElement("th", null, "Order ID"),
-//             React.createElement("th", null, "Customer"),
-//             React.createElement("th", null, "Total"),
-//             React.createElement("th", null, "Status"),
-//             React.createElement("th", null, "Actions")
-//           )
-//         ),
-//         React.createElement("tbody", null,
-//           orders.map(order =>
-//             React.createElement("tr", { key: order.id },
-//               React.createElement("td", null, order.id),
-//               React.createElement("td", null, order.customer),
-//               React.createElement("td", null, `$${order.total}`),
-//               React.createElement("td", null, order.status),
-//               React.createElement("td", null,
-//                 React.createElement(Link, { 
-//                   to: `/admin/orders/${order.id}`,
-//                   style: styles.actionButton 
-//                 }, "View")
-//               )
-//             )
-//           )
-//         )
-//       )
-//     ),
+  const editModel = (modelId) => {
+    setActiveSection('add-model');
+    showNotification(`Editing model #${modelId}`, 'success');
+  };
 
-//     activeTab === 'users' && React.createElement("div", { style: styles.tabContent },
-//       React.createElement("h2", null, "User Management"),
-//       React.createElement("p", null, "User management content goes here")
-//     )
-//   );
-// }
+  const deleteModel = (modelId) => {
+    if (window.confirm(`Are you sure you want to delete model #${modelId}?`)) {
+      showNotification(`Model #${modelId} deleted`, 'success');
+      setModels(models.filter(model => model.id !== parseInt(modelId)));
+    }
+  };
 
-// const styles = {
-//   container: {
-//     maxWidth: '1200px',
-//     margin: '0 auto',
-//     padding: '20px'
-//   },
-//   tabs: {
-//     display: 'flex',
-//     borderBottom: '1px solid #ddd',
-//     marginBottom: '20px'
-//   },
-//   tabButton: {
-//     padding: '12px 20px',
-//     backgroundColor: 'transparent',
-//     border: 'none',
-//     cursor: 'pointer',
-//     fontSize: '16px'
-//   },
-//   activeTab: {
-//     borderBottom: '2px solid #2c3e50',
-//     fontWeight: 'bold'
-//   },
-//   tabContent: {
-//     padding: '20px 0'
-//   },
-//   header: {
-//     display: 'flex',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     marginBottom: '20px'
-//   },
-//   addButton: {
-//     padding: '10px 15px',
-//     backgroundColor: '#2c3e50',
-//     color: 'white',
-//     textDecoration: 'none',
-//     borderRadius: '4px'
-//   },
-//   table: {
-//     width: '100%',
-//     borderCollapse: 'collapse'
-//   },
-//   actionButton: {
-//     padding: '5px 10px',
-//     marginRight: '5px',
-//     backgroundColor: '#3498db',
-//     color: 'white',
-//     textDecoration: 'none',
-//     border: 'none',
-//     borderRadius: '3px',
-//     cursor: 'pointer'
-//   },
-//   deleteButton: {
-//     backgroundColor: '#e74c3c'
-//   }
-// };
-
-// export default AdminDashboard;
-
-
-import React, { useState } from 'react';
-
-const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState('furniture');
-  const [furnitureItems, setFurnitureItems] = useState([
-    { id: 1, name: 'Modern Sofa', category: 'Living Room', price: 599, stock: 15 },
-    { id: 2, name: 'Dining Table', category: 'Dining', price: 899, stock: 8 },
-    { id: 3, name: 'King Bed', category: 'Bedroom', price: 1299, stock: 5 }
-  ]);
-  const [newFurniture, setNewFurniture] = useState({
-    name: '',
-    category: '',
-    price: '',
-    stock: ''
-  });
-  const [payments, setPayments] = useState([
-    { id: 1, orderId: 'ORD-1001', customer: 'John Doe', amount: 599, date: '2023-05-15', status: 'Completed' },
-    { id: 2, orderId: 'ORD-1002', customer: 'Jane Smith', amount: 1299, date: '2023-05-16', status: 'Processing' },
-    { id: 3, orderId: 'ORD-1003', customer: 'Robert Johnson', amount: 899, date: '2023-05-17', status: 'Completed' }
-  ]);
-  const [users, setUsers] = useState([
-    { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Customer', joinDate: '2023-01-15' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Customer', joinDate: '2023-02-20' },
-    { id: 3, name: 'Admin User', email: 'admin@example.com', role: 'Admin', joinDate: '2023-03-10' }
-  ]);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  // Furniture Management
-  const handleAddFurniture = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newItem = {
-      id: furnitureItems.length + 1,
-      ...newFurniture,
-      price: parseFloat(newFurniture.price),
-      stock: parseInt(newFurniture.stock)
-    };
-    setFurnitureItems([...furnitureItems, newItem]);
-    setNewFurniture({ name: '', category: '', price: '', stock: '' });
+    showNotification('Model uploaded successfully!', 'success');
+    setActiveSection('dashboard');
   };
-
-  const handleDeleteFurniture = (id) => {
-    setFurnitureItems(furnitureItems.filter(item => item.id !== id));
-  };
-
-  // User Management
-  const handleDeleteUser = (id) => {
-    setUsers(users.filter(user => user.id !== id));
-  };
-
-  const handlePromoteUser = (id) => {
-    setUsers(users.map(user =>
-      user.id === id ? { ...user, role: 'Admin' } : user
-    ));
-  };
-
-  // Filter data based on search term
-  const filteredPayments = payments.filter(payment =>
-    payment.orderId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    payment.customer.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
-    <div style={{
-      display: 'flex',
-      minHeight: '100vh',
-      fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#f5f7fa'
-    }}>
-      {/* Sidebar */}
-      <div style={{
-        width: '250px',
-        backgroundColor: '#2c3e50',
-        color: 'white',
-        padding: '20px 0',
-        boxShadow: '2px 0 10px rgba(0,0,0,0.1)'
-      }}>
-        <div style={{
-          padding: '0 20px 20px',
-          borderBottom: '1px solid #34495e'
-        }}>
-          <h2 style={{
-            margin: '0',
-            fontSize: '20px',
-            fontWeight: '600'
-          }}>Furniture Admin</h2>
-          <p style={{
-            margin: '5px 0 0',
-            fontSize: '14px',
-            color: '#bdc3c7'
-          }}>Administrator Panel</p>
+    <div className="admin-container">
+      <header>
+        <div className="logo">
+          <i className="fas fa-couch"></i>
+          <span>FurniCraft Admin</span>
         </div>
-
-        <nav style={{ marginTop: '20px' }}>
-          <button
-            onClick={() => setActiveTab('furniture')}
-            style={{
-              display: 'block',
-              width: '100%',
-              textAlign: 'left',
-              padding: '12px 20px',
-              backgroundColor: activeTab === 'furniture' ? '#3498db' : 'transparent',
-              color: 'white',
-              border: 'none',
-              fontSize: '15px',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            }}
-          >
-            Furniture Management
-          </button>
-          <button
-            onClick={() => setActiveTab('payments')}
-            style={{
-              display: 'block',
-              width: '100%',
-              textAlign: 'left',
-              padding: '12px 20px',
-              backgroundColor: activeTab === 'payments' ? '#3498db' : 'transparent',
-              color: 'white',
-              border: 'none',
-              fontSize: '15px',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            }}
-          >
-            Payment Details
-          </button>
-          <button
-            onClick={() => setActiveTab('users')}
-            style={{
-              display: 'block',
-              width: '100%',
-              textAlign: 'left',
-              padding: '12px 20px',
-              backgroundColor: activeTab === 'users' ? '#3498db' : 'transparent',
-              color: 'white',
-              border: 'none',
-              fontSize: '15px',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            }}
-          >
-            User Management
-          </button>
+        <nav>
+          <ul>
+            <li><Link to="/"><i className="fas fa-home"></i> Home</Link></li>
+            <li>
+              <Link 
+                to="/admin" 
+                className={activeSection === 'dashboard' ? 'active' : ''}
+                onClick={() => setActiveSection('dashboard')}
+              >
+                <i className="fas fa-tachometer-alt"></i> Dashboard
+              </Link>
+            </li>
+            <li><Link to="/logout" id="logout"><i className="fas fa-sign-out-alt"></i> Logout</Link></li>
+          </ul>
         </nav>
-      </div>
+      </header>
 
-      {/* Main Content */}
-      <div style={{
-        flex: 1,
-        padding: '20px'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '8px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
-          padding: '20px',
-          marginBottom: '20px'
-        }}>
-          <h1 style={{
-            margin: '0 0 20px',
-            fontSize: '24px',
-            color: '#2c3e50'
-          }}>
-            {activeTab === 'furniture' && 'Furniture Management'}
-            {activeTab === 'payments' && 'Payment Details'}
-            {activeTab === 'users' && 'User Management'}
-          </h1>
-
-          {/* Search Bar */}
-          {(activeTab === 'payments' || activeTab === 'users') && (
-            <div style={{ marginBottom: '20px' }}>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  padding: '10px 15px',
-                  width: '300px',
-                  border: '1px solid #ddd',
-                  borderRadius: '4px',
-                  fontSize: '14px'
-                }}
-              />
-            </div>
-          )}
-
-          {/* Furniture Management */}
-          {activeTab === 'furniture' && (
-            <div>
-              <h2 style={{
-                fontSize: '18px',
-                margin: '20px 0 15px',
-                color: '#34495e'
-              }}>Add New Furniture Item</h2>
-
-              <form onSubmit={handleAddFurniture} style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '15px',
-                marginBottom: '30px'
-              }}>
-                <div>
-                  <label style={{
-                    display: 'block',
-                    marginBottom: '5px',
-                    fontSize: '14px',
-                    color: '#7f8c8d'
-                  }}>Item Name</label>
-                  <input
-                    type="text"
-                    value={newFurniture.name}
-                    onChange={(e) => setNewFurniture({ ...newFurniture, name: e.target.value })}
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{
-                    display: 'block',
-                    marginBottom: '5px',
-                    fontSize: '14px',
-                    color: '#7f8c8d'
-                  }}>Category</label>
-                  <select
-                    value={newFurniture.category}
-                    onChange={(e) => setNewFurniture({ ...newFurniture, category: e.target.value })}
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px'
-                    }}
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Living Room">Living Room</option>
-                    <option value="Bedroom">Bedroom</option>
-                    <option value="Dining">Dining</option>
-                    <option value="Office">Office</option>
-                    <option value="Outdoor">Outdoor</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label style={{
-                    display: 'block',
-                    marginBottom: '5px',
-                    fontSize: '14px',
-                    color: '#7f8c8d'
-                  }}>Price ($)</label>
-                  <input
-                    type="number"
-                    value={newFurniture.price}
-                    onChange={(e) => setNewFurniture({ ...newFurniture, price: e.target.value })}
-                    required
-                    min="0"
-                    step="0.01"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{
-                    display: 'block',
-                    marginBottom: '5px',
-                    fontSize: '14px',
-                    color: '#7f8c8d'
-                  }}>Stock Quantity</label>
-                  <input
-                    type="number"
-                    value={newFurniture.stock}
-                    onChange={(e) => setNewFurniture({ ...newFurniture, stock: e.target.value })}
-                    required
-                    min="0"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px'
-                    }}
-                  />
-                </div>
-
-                <div style={{ gridColumn: '1 / -1' }}>
-                  <button type="submit" style={{
-                    padding: '10px 20px',
-                    backgroundColor: '#2ecc71',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '15px',
-                    transition: 'background-color 0.3s'
-                  }}>
-                    Add Furniture Item
-                  </button>
-                </div>
-              </form>
-
-              <h2 style={{
-                fontSize: '18px',
-                margin: '20px 0 15px',
-                color: '#34495e'
-              }}>Current Inventory</h2>
-
-              <div style={{
-                overflowX: 'auto'
-              }}>
-                <table style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
-                  color: 'black'
-                }}>
-                  <thead>
-                    <tr style={{
-                      backgroundColor: '#f8f9fa',
-                      borderBottom: '1px solid #ddd'
-                    }}>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>ID</th>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>Name</th>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>Category</th>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>Price</th>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>Stock</th>
-                      <th style={{ padding: '12px 15px', textAlign: 'left' }}>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {furnitureItems.map(item => (
-                      <tr key={item.id} style={{
-                        borderBottom: '1px solid #eee',
-                        '&:hover': {
-                          backgroundColor: '#f9f9f9'
-                        }
-                      }}>
-                        <td style={{ padding: '12px 15px' }}>{item.id}</td>
-                        <td style={{ padding: '12px 15px' }}>{item.name}</td>
-                        <td style={{ padding: '12px 15px' }}>{item.category}</td>
-                        <td style={{ padding: '12px 15px' }}>${item.price.toFixed(2)}</td>
-                        <td style={{ padding: '12px 15px' }}>{item.stock}</td>
-                        <td style={{ padding: '12px 15px' }}>
-                          <button
-                            onClick={() => handleDeleteFurniture(item.id)}
-                            style={{
-                              padding: '6px 12px',
-                              backgroundColor: '#e74c3c',
-                              color: 'white',
-                              border: 'none',
-                              borderRadius: '4px',
-                              cursor: 'pointer',
-                              fontSize: '13px',
-                              marginRight: '5px'
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      <main className="admin-main">
+        {activeSection === 'dashboard' && (
+          <section className="admin-actions">
+            <h2><i className="fas fa-tasks"></i> Admin Dashboard</h2>
+            <div className="action-cards">
+              <div className="card" onClick={() => setActiveSection('add-model')}>
+                <h3><i className="fas fa-plus-circle"></i> Add New Model</h3>
+                <p>Upload new 3D furniture models to the catalog</p>
+                <button className="btn"><i className="fas fa-upload"></i> Add Model</button>
+              </div>
+              <div className="card" onClick={() => setActiveSection('models-list')}>
+                <h3><i className="fas fa-boxes"></i> Manage Models</h3>
+                <p>View, edit or delete existing furniture models</p>
+                <button className="btn"><i className="fas fa-list"></i> View Models</button>
+              </div>
+              <div className="card" onClick={() => setActiveSection('rooms-preview')}>
+                <h3><i className="fas fa-door-open"></i> View Rooms</h3>
+                <p>Preview furniture arrangements in different room types</p>
+                <button className="btn"><i className="fas fa-eye"></i> View Rooms</button>
+              </div>
+              <div className="card" onClick={() => setActiveSection('analytics')}>
+                <h3><i className="fas fa-chart-line"></i> Analytics</h3>
+                <p>View usage statistics and model popularity</p>
+                <button className="btn"><i className="fas fa-chart-pie"></i> View Analytics</button>
               </div>
             </div>
-          )}
+          </section>
+        )}
 
-          {/* Payment Details */}
-          {activeTab === 'payments' && (
-            <div style={{
-              overflowX: 'auto'
-            }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                color: 'black'
-              }}>
+        {activeSection === 'add-model' && (
+          <section className="model-form">
+            <h2><i className="fas fa-cube"></i> Add New Furniture Model</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="modelName">Model Name</label>
+                <input type="text" id="modelName" placeholder="Enter model name" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelDescription">Description</label>
+                <textarea id="modelDescription" rows="3" placeholder="Enter model description"></textarea>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelCategory">Category</label>
+                <select id="modelCategory" required>
+                  <option value="">Select a category</option>
+                  <option value="sofa">Sofa</option>
+                  <option value="chair">Chair</option>
+                  <option value="table">Table</option>
+                  <option value="bed">Bed</option>
+                  <option value="outdoor">Outdoor Sofa</option>
+                  <option value="desk">Desk</option>
+                  <option value="cabinet">Cabinet</option>
+                  <option value="office-chair">Office Chair</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelPrice">Price (USD)</label>
+                <input type="number" id="modelPrice" placeholder="Enter price" min="0" step="0.01" />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelDimensions">Dimensions (L x W x H in cm)</label>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <input type="number" id="modelLength" placeholder="Length" min="0" style={{ flex: 1 }} />
+                  <input type="number" id="modelWidth" placeholder="Width" min="0" style={{ flex: 1 }} />
+                  <input type="number" id="modelHeight" placeholder="Height" min="0" style={{ flex: 1 }} />
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelFile">GLTF Model File</label>
+                <input type="file" id="modelFile" accept=".gltf,.glb" required />
+              </div>
+              
+              <div className="form-group">
+                <label>Textures (3 required)</label>
+                <div className="texture-files">
+                  <div className="texture-file-container">
+                    <i className="fas fa-image"></i>
+                    <p>Base Color</p>
+                    <input type="file" className="texture-file" accept=".jpg,.png,.jpeg" required />
+                  </div>
+                  <div className="texture-file-container">
+                    <i className="fas fa-image"></i>
+                    <p>Normal Map</p>
+                    <input type="file" className="texture-file" accept=".jpg,.png,.jpeg" required />
+                  </div>
+                  <div className="texture-file-container">
+                    <i className="fas fa-image"></i>
+                    <p>Roughness/Metalness</p>
+                    <input type="file" className="texture-file" accept=".jpg,.png,.jpeg" required />
+                  </div>
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelThumbnail">Thumbnail Image</label>
+                <input type="file" id="modelThumbnail" accept=".jpg,.png,.jpeg" required />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="modelStatus">Status</label>
+                <select id="modelStatus">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                <button type="submit" className="btn btn-success"><i className="fas fa-save"></i> Save Model</button>
+                <button 
+                  type="button" 
+                  className="btn btn-outline" 
+                  onClick={() => setActiveSection('dashboard')}
+                >
+                  <i className="fas fa-times"></i> Cancel
+                </button>
+              </div>
+            </form>
+          </section>
+        )}
+
+        {activeSection === 'models-list' && (
+          <section className="models-list">
+            <h2><i className="fas fa-box-open"></i> Furniture Models</h2>
+            <div className="table-container">
+              <table>
                 <thead>
-                  <tr style={{
-                    backgroundColor: '#f8f9fa',
-                    borderBottom: '1px solid #ddd'
-                  }}>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Order ID</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Customer</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Amount</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Date</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Status</th>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredPayments.map(payment => (
-                    <tr key={payment.id} style={{
-                      borderBottom: '1px solid #eee'
-                    }}>
-                      <td style={{ padding: '12px 15px' }}>{payment.orderId}</td>
-                      <td style={{ padding: '12px 15px' }}>{payment.customer}</td>
-                      <td style={{ padding: '12px 15px' }}>${payment.amount.toFixed(2)}</td>
-                      <td style={{ padding: '12px 15px' }}>{payment.date}</td>
-                      <td style={{ padding: '12px 15px' }}>
-                        <span style={{
-                          padding: '4px 8px',
-                          borderRadius: '4px',
-                          backgroundColor: payment.status === 'Completed' ? '#2ecc71' : '#f39c12',
-                          color: 'white',
-                          fontSize: '13px'
-                        }}>
-                          {payment.status}
-                        </span>
+                  {isLoading ? (
+                    <tr>
+                      <td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>
+                        Loading models...
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    models.map(model => (
+                      <tr key={model.id}>
+                        <td>{model.id}</td>
+                        <td>{model.name}</td>
+                        <td>{formatCategory(model.category)}</td>
+                        <td>${model.price.toFixed(2)}</td>
+                        <td>
+                          <span className={`status-badge status-${model.status}`}>
+                            {model.status.charAt(0).toUpperCase() + model.status.slice(1)}
+                          </span>
+                        </td>
+                        <td>{model.date}</td>
+                        <td>
+                          <div className="action-btns">
+                            <button 
+                              className="action-btn preview-btn" 
+                              title="Preview" 
+                              onClick={() => previewModel(model.id)}
+                            >
+                              <i className="fas fa-eye"></i>
+                            </button>
+                            <button 
+                              className="action-btn edit-btn" 
+                              title="Edit" 
+                              onClick={() => editModel(model.id)}
+                            >
+                              <i className="fas fa-edit"></i>
+                            </button>
+                            <button 
+                              className="action-btn delete-btn" 
+                              title="Delete" 
+                              onClick={() => deleteModel(model.id)}
+                            >
+                              <i className="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
-          )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1.5rem' }}>
+              <div>
+                <button 
+                  className="btn" 
+                  onClick={() => setActiveSection('add-model')}
+                >
+                  <i className="fas fa-plus"></i> Add New Model
+                </button>
+              </div>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button className="btn btn-outline"><i className="fas fa-download"></i> Export</button>
+                <button className="btn btn-outline"><i className="fas fa-filter"></i> Filter</button>
+              </div>
+            </div>
+          </section>
+        )}
 
-          {/* User Management */}
-          {activeTab === 'users' && (
-            <div style={{
-              overflowX: 'auto'
-            }}>
-              <table style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                color: 'black'
-              }}>
-                <thead>
-                  <tr style={{
-                    backgroundColor: '#f8f9fa',
-                    borderBottom: '1px solid #ddd'
-                  }}>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>ID</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Name</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Email</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Role</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Join Date</th>
-                    <th style={{ padding: '12px 15px', textAlign: 'left' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredUsers.map(user => (
-                    <tr key={user.id} style={{
-                      borderBottom: '1px solid #eee'
-                    }}>
-                      <td style={{ padding: '12px 15px' }}>{user.id}</td>
-                      <td style={{ padding: '12px 15px' }}>{user.name}</td>
-                      <td style={{ padding: '12px 15px' }}>{user.email}</td>
-                      <td style={{ padding: '12px 15px' }}>{user.role}</td>
-                      <td style={{ padding: '12px 15px' }}>{user.joinDate}</td>
-                      <td style={{ padding: '12px 15px' }}>
-                        {user.role === 'Customer' && (
-                          <button
-                            onClick={() => handlePromoteUser(user.id)}
-                            style={{
-                              padding: '6px 12px',
-                              backgroundColor: '#3498db',
-                              color: 'white',
-                              border: 'none',
-                              borderRadius: '4px',
-                              cursor: 'pointer',
-                              fontSize: '13px',
-                              marginRight: '5px'
-                            }}
-                          >
-                            Make Admin
-                          </button>
-                        )}
-                        <button
-                          onClick={() => handleDeleteUser(user.id)}
-                          style={{
-                            padding: '6px 12px',
-                            backgroundColor: '#e74c3c',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '4px',
-                            cursor: 'pointer',
-                            fontSize: '13px'
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {activeSection === 'rooms-preview' && (
+          <section className="rooms-preview">
+            <h2><i className="fas fa-camera"></i> Rooms Preview</h2>
+            <div className="room-selector">
+              <select id="roomSelect">
+                <option value="">Select a room type</option>
+                <option value="kids">Kids Room</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="living">Living Room</option>
+                <option value="bedroom">Bedroom</option>
+                <option value="dining">Dining Room</option>
+                <option value="office">Office</option>
+                <option value="bathroom">Bathroom</option>
+              </select>
+              <button className="btn"><i className="fas fa-sync-alt"></i> Load Room</button>
             </div>
-          )}
-        </div>
-      </div>
+            <div className="threejs-container" id="roomViewer">
+              <div className="loading-overlay">
+                <div className="loading-spinner"></div>
+                <p>Loading room...</p>
+              </div>
+            </div>
+            <div style={{ marginTop: '1.5rem' }}>
+              <h3>Available Furniture in This Room</h3>
+              <div className="action-cards">
+                {models.slice(0, 4).map(item => (
+                  <div className="card" key={item.id}>
+                    <h3>{item.name}</h3>
+                    <p>Category: {formatCategory(item.category)}</p>
+                    <p>Price: ${item.price.toFixed(2)}</p>
+                    <button 
+                      className="btn btn-outline" 
+                      style={{ marginTop: '0.5rem' }}
+                      onClick={() => previewModel(item.id)}
+                    >
+                      <i className="fas fa-search"></i> Preview
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {activeSection === 'analytics' && (
+          <section className="analytics">
+            <h2><i className="fas fa-chart-bar"></i> Analytics Dashboard</h2>
+            <div className="action-cards">
+              <div className="card">
+                <h3><i className="fas fa-cubes"></i> Total Models</h3>
+                <p>{models.length}</p>
+              </div>
+              <div className="card">
+                <h3><i className="fas fa-eye"></i> Monthly Views</h3>
+                <p>1,245 views</p>
+              </div>
+              <div className="card">
+                <h3><i className="fas fa-star"></i> Most Popular</h3>
+                <p>Modern Sofa (328 views)</p>
+              </div>
+              <div className="card">
+                <h3><i className="fas fa-users"></i> Active Users</h3>
+                <p>142 active users</p>
+              </div>
+            </div>
+            <div style={{ 
+              backgroundColor: 'white', 
+              borderRadius: 'var(--border-radius)', 
+              boxShadow: 'var(--box-shadow)', 
+              padding: '2rem', 
+              marginTop: '2rem' 
+            }}>
+              <h3>Model Usage Statistics</h3>
+              <div id="chartContainer" style={{ height: '400px', width: '100%' }}>
+                {/* Chart would be rendered here */}
+                <p style={{ textAlign: 'center', padding: '4rem' }}>
+                  Chart visualization would appear here in a real application
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+
+      <footer>
+        <p>&copy; {new Date().getFullYear()} FurniCraft Admin. All rights reserved.</p>
+      </footer>
+
+      <style jsx global>{`
+        :root {
+          --primary-color: #4361ee;
+          --secondary-color: #3f37c9;
+          --accent-color: #4895ef;
+          --dark-color: #2b2d42;
+          --light-color: #f8f9fa;
+          --success-color: #4cc9f0;
+          --warning-color: #f8961e;
+          --danger-color: #f72585;
+          --gray-color: #adb5bd;
+          --border-radius: 8px;
+          --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          --transition: all 0.3s ease;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+          background-color: #f5f7fb;
+          color: var(--dark-color);
+          line-height: 1.6;
+        }
+
+        header {
+          background-color: white;
+          box-shadow: var(--box-shadow);
+          padding: 1rem 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--primary-color);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .logo i {
+          font-size: 1.8rem;
+        }
+
+        nav ul {
+          display: flex;
+          list-style: none;
+          gap: 1.5rem;
+        }
+
+        nav a {
+          text-decoration: none;
+          color: var(--dark-color);
+          font-weight: 500;
+          padding: 0.5rem 1rem;
+          border-radius: var(--border-radius);
+          transition: var(--transition);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        nav a:hover {
+          background-color: #f0f2f5;
+        }
+
+        nav a.active {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        nav a i {
+          font-size: 1.1rem;
+        }
+
+        .admin-main {
+          padding: 2rem;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        h2 {
+          color: var(--dark-color);
+          margin-bottom: 1.5rem;
+          font-size: 1.8rem;
+          position: relative;
+          padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 60px;
+          height: 4px;
+          background-color: var(--accent-color);
+          border-radius: 2px;
+        }
+
+        .action-cards {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 1.5rem;
+          margin-top: 1.5rem;
+        }
+
+        .card {
+          background-color: white;
+          border-radius: var(--border-radius);
+          box-shadow: var(--box-shadow);
+          padding: 1.5rem;
+          transition: var(--transition);
+          cursor: pointer;
+          border-left: 4px solid var(--primary-color);
+        }
+
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+          color: var(--dark-color);
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .card h3 i {
+          color: var(--primary-color);
+        }
+
+        .card p {
+          color: var(--gray-color);
+          margin-bottom: 1.5rem;
+          font-size: 0.9rem;
+        }
+
+        .btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 0.6rem 1.2rem;
+          border-radius: var(--border-radius);
+          cursor: pointer;
+          font-weight: 500;
+          transition: var(--transition);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .btn:hover {
+          background-color: var(--secondary-color);
+          transform: translateY(-2px);
+        }
+
+        .btn-outline {
+          background-color: transparent;
+          border: 1px solid var(--primary-color);
+          color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+          background-color: var(--primary-color);
+          color: white;
+        }
+
+        .btn-danger {
+          background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+          background-color: #d1145a;
+        }
+
+        .btn-success {
+          background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+          background-color: #3aa8d8;
+        }
+
+        .model-form, .rooms-preview {
+          background-color: white;
+          border-radius: var(--border-radius);
+          box-shadow: var(--box-shadow);
+          padding: 2rem;
+          margin-top: 2rem;
+          animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+          margin-bottom: 1.5rem;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: var(--dark-color);
+        }
+
+        input[type="text"],
+        input[type="file"],
+        select,
+        textarea {
+          width: 100%;
+          padding: 0.8rem;
+          border: 1px solid var(--gray-color);
+          border-radius: var(--border-radius);
+          font-size: 1rem;
+          transition: var(--transition);
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        select:focus,
+        textarea:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .texture-files {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 0.5rem;
+        }
+
+        .texture-file-container {
+          border: 1px dashed var(--gray-color);
+          border-radius: var(--border-radius);
+          padding: 1rem;
+          text-align: center;
+          transition: var(--transition);
+        }
+
+        .texture-file-container:hover {
+          border-color: var(--primary-color);
+        }
+
+        .texture-file-container i {
+          font-size: 2rem;
+          color: var(--gray-color);
+          margin-bottom: 0.5rem;
+        }
+
+        .texture-file-container p {
+          font-size: 0.8rem;
+          color: var(--gray-color);
+        }
+
+        .room-selector {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .room-selector select {
+          flex: 1;
+        }
+
+        .threejs-container {
+          width: 100%;
+          height: 500px;
+          background-color: #e9ecef;
+          border-radius: var(--border-radius);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .loading-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.7);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          z-index: 10;
+        }
+
+        .loading-spinner {
+          border: 4px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top: 4px solid white;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+          margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .models-list {
+          margin-top: 2rem;
+        }
+
+        .table-container {
+          overflow-x: auto;
+          background-color: white;
+          border-radius: var(--border-radius);
+          box-shadow: var(--box-shadow);
+          padding: 1rem;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        th, td {
+          padding: 1rem;
+          text-align: left;
+          border-bottom: 1px solid #eee;
+        }
+
+        th {
+          background-color: #f8f9fa;
+          font-weight: 600;
+          color: var(--dark-color);
+        }
+
+        tr:hover {
+          background-color: #f8f9fa;
+        }
+
+        .status-badge {
+          display: inline-block;
+          padding: 0.3rem 0.6rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+
+        .status-active {
+          background-color: #e3fafc;
+          color: #1098ad;
+        }
+
+        .status-inactive {
+          background-color: #fff3bf;
+          color: #f59f00;
+        }
+
+        .action-btns {
+          display: flex;
+          gap: 0.5rem;
+        }
+
+        .action-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.1rem;
+          padding: 0.3rem;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: var(--transition);
+        }
+
+        .action-btn:hover {
+          background-color: #f1f3f5;
+        }
+
+        .edit-btn {
+          color: var(--accent-color);
+        }
+
+        .delete-btn {
+          color: var(--danger-color);
+        }
+
+        .preview-btn {
+          color: var(--success-color);
+        }
+
+        footer {
+          text-align: center;
+          padding: 1.5rem;
+          margin-top: 2rem;
+          background-color: white;
+          color: var(--gray-color);
+          font-size: 0.9rem;
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .notification {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 1rem 1.5rem;
+          border-radius: var(--border-radius);
+          box-shadow: var(--box-shadow);
+          color: white;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          z-index: 1000;
+          animation: slideIn 0.3s ease, fadeOut 0.5s ease 3s forwards;
+        }
+
+        @keyframes slideIn {
+          from { transform: translateX(100%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+
+        .notification.success {
+          background-color: var(--success-color);
+        }
+
+        .notification.error {
+          background-color: var(--danger-color);
+        }
+
+        .notification.warning {
+          background-color: var(--warning-color);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+          header {
+            flex-direction: column;
+            padding: 1rem;
+          }
+
+          nav ul {
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .action-cards {
+            grid-template-columns: 1fr;
+          }
+
+          .room-selector {
+            flex-direction: column;
+          }
+
+          .threejs-container {
+            height: 350px;
+          }
+        }
+      `}</style>
     </div>
   );
-};
+}
 
 export default AdminDashboard;
