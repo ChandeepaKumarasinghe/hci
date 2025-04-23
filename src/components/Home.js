@@ -214,7 +214,8 @@ const styles = {
     textAlign: 'center',
     fontSize: '36px',
     marginBottom: '40px',
-    color: '#2c3e50'
+    //color: '#2c3e50'
+    color: 'white'
   },
   categoryGrid: {
     display: 'grid',
