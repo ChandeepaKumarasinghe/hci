@@ -26,7 +26,6 @@ function App() {
               <Route path="/payment" element={<Payment />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/designer" element={<RoomDesigner />} />
-
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
             </Routes>
