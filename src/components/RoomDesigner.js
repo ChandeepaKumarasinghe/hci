@@ -217,7 +217,7 @@ class RoomDesigner extends React.Component {
     const standardSizes = {
       'Bed': 3,
       'Bookshelf': 4,
-      'Chair': 0.8,
+      'Chair': 2,
       'Classic Chair': 20,
       'Desk': 1.2,
       'Sofa': 1.5,
