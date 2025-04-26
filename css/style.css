@@ -162,7 +162,7 @@ header {
 
 .model-viewer {
     flex: 1;
-    height: 500px;
+    height: 400px;
     background-color: #f0f0f0;
     border-radius: 8px;
     overflow: hidden;

@@ -34,8 +34,8 @@ body {
 }
 
 .ui-panel {
-  width: 350px;
-  padding: 20px;
+  width: 2000px;
+  padding: 10px;
   overflow-y: auto;
   background-color: var(--dark-bg);
   border-left: 1px solid var(--dark-accent);
@@ -62,18 +62,18 @@ body {
 
 /* UI Sections */
 .ui-section {
-  margin-bottom: 25px;
+  margin-bottom: 75px;
 }
 
 .ui-section h3 {
-  margin-top: 0;
+  margin-top: 10;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--dark-accent);
   color: var(--text-primary);
 }
 
 .subsection {
-  margin-bottom: 20px;
+  margin-bottom: 90px;
 }
 
 .subsection h4, .subsection h5 {

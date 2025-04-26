@@ -6,6 +6,7 @@ import RoomSelector from './RoomSelector';
 import FurnitureManager from './FurnitureManager';
 import WallCustomizer from './WallCustomizer';
 import TextureApplier from './TextureApplier';
+import ViewControls from './ViewControls';
 import './App.css';
 
 class RoomDesigner extends React.Component {
@@ -16,7 +17,10 @@ class RoomDesigner extends React.Component {
       furnitureItems: [],
       wallTexture: null,
       selectedTexture: null,
-      isLoading: false
+      isLoading: false,
+      is2DView: false,
+      isFadingEnabled: false,
+      fadeIntensity: 0.5
     };
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -26,6 +30,25 @@ class RoomDesigner extends React.Component {
     this.wallMaterials = [];
     this.roomScaleFactor = 1.0;
     this.standardFurnitureHeight = 1.0;
+    this.fadeEffect = {
+      uniforms: {
+        fadeFactor: { value: 1.0 }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float fadeFactor;
+        varying vec2 vUv;
+        void main() {
+          gl_FragColor = vec4(vec3(fadeFactor), 1.0);
+        }
+      `
+    };
   }
 
   componentDidMount() {
@@ -53,10 +76,7 @@ class RoomDesigner extends React.Component {
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.25;
 
-    const gridHelper = new THREE.GridHelper(20, 20);
-    gridHelper.position.y = -0.01;
-    this.scene.add(gridHelper);
-
+    // Removed the grid helper creation
     this.animate();
   };
 
@@ -86,8 +106,138 @@ class RoomDesigner extends React.Component {
 
   animate = () => {
     this.animationId = requestAnimationFrame(this.animate);
+    
+    if (this.state.isFadingEnabled) {
+      const fadeValue = 0.5 + Math.sin(Date.now() * 0.001) * this.state.fadeIntensity * 0.5;
+      this.applyFadeEffect(fadeValue);
+    }
+    
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
+  };
+
+  applyFadeEffect = (fadeValue) => {
+    if (this.roomModel) {
+      this.roomModel.traverse((child) => {
+        if (child.isMesh) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(mat => {
+              mat.opacity = fadeValue;
+              mat.transparent = true;
+            });
+          } else {
+            child.material.opacity = fadeValue;
+            child.material.transparent = true;
+          }
+        }
+      });
+    }
+    
+    this.state.furnitureItems.forEach(item => {
+      item.model.traverse((child) => {
+        if (child.isMesh) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(mat => {
+              mat.opacity = fadeValue;
+              mat.transparent = true;
+            });
+          } else {
+            child.material.opacity = fadeValue;
+            child.material.transparent = true;
+          }
+        }
+      });
+    });
+  };
+
+  toggle2DView = () => {
+    this.setState(prevState => {
+      const is2DView = !prevState.is2DView;
+      
+      if (is2DView) {
+        // Switch to orthographic camera for 2D view
+        const width = window.innerWidth * 0.8;
+        const height = window.innerHeight * 0.8;
+        this.camera = new THREE.OrthographicCamera(
+          width / -2, width / 2, height / 2, height / -2, 0.1, 1000
+        );
+        this.camera.position.set(0, 10, 0);
+        this.camera.lookAt(0, 0, 0);
+        this.camera.zoom = 50;
+        this.camera.updateProjectionMatrix();
+        
+        // Update controls
+        this.controls.dispose();
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.25;
+      } else {
+        // Switch back to perspective camera for 3D view
+        this.camera = new THREE.PerspectiveCamera(
+          75, 
+          window.innerWidth * 0.8 / window.innerHeight * 0.8, 
+          0.1, 
+          1000
+        );
+        this.camera.position.set(5, 5, 5);
+        this.camera.lookAt(0, 0, 0);
+        
+        // Update controls
+        this.controls.dispose();
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.25;
+      }
+      
+      return { is2DView };
+    });
+  };
+
+  toggleFading = () => {
+    this.setState(prevState => {
+      const isFadingEnabled = !prevState.isFadingEnabled;
+      
+      // Reset opacity when turning off fading
+      if (!isFadingEnabled) {
+        if (this.roomModel) {
+          this.roomModel.traverse((child) => {
+            if (child.isMesh) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(mat => {
+                  mat.opacity = 1.0;
+                  mat.transparent = false;
+                });
+              } else {
+                child.material.opacity = 1.0;
+                child.material.transparent = false;
+              }
+            }
+          });
+        }
+        
+        this.state.furnitureItems.forEach(item => {
+          item.model.traverse((child) => {
+            if (child.isMesh) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(mat => {
+                  mat.opacity = 1.0;
+                  mat.transparent = false;
+                });
+              } else {
+                child.material.opacity = 1.0;
+                child.material.transparent = false;
+              }
+            }
+          });
+        });
+      }
+      
+      return { isFadingEnabled };
+    });
+  };
+
+  setFadeIntensity = (intensity) => {
+    this.setState({ fadeIntensity: intensity });
   };
 
   loadRoomModel = (roomType) => {
@@ -363,7 +513,7 @@ class RoomDesigner extends React.Component {
   };
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, is2DView, isFadingEnabled, fadeIntensity } = this.state;
     
     return (
       <div className="room-designer-container dark-theme">
@@ -377,6 +527,15 @@ class RoomDesigner extends React.Component {
         )}
         
         <div className="ui-panel dark-panel">
+          <ViewControls
+            is2DView={is2DView}
+            isFadingEnabled={isFadingEnabled}
+            fadeIntensity={fadeIntensity}
+            onToggle2DView={this.toggle2DView}
+            onToggleFading={this.toggleFading}
+            onSetFadeIntensity={this.setFadeIntensity}
+          />
+          
           <RoomSelector 
             currentRoom={this.state.currentRoom} 
             onSelectRoom={this.loadRoomModel} 
